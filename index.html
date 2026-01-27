@@ -71,6 +71,7 @@
                 <button class="btn-secondary" onclick="showSection('login')">Login</button>
                 <button class="btn-primary" onclick="showSection('signup')">Sign Up</button>
             </div>
+            <button class="btn-guest" onclick="showSection('guest-home')">Continue as a Guest</button>
         </div>
     </section>
 
@@ -115,6 +116,7 @@
                     </button>
                 </div>
             </div>
+            <button class="btn-guest btn-full" onclick="showSection('guest-home')" style="margin-top: 20px;">Continue as a Guest</button>
         </div>
     </section>
 
@@ -151,6 +153,7 @@
                 </div>
                 <button type="submit" class="btn-primary btn-full">Continue</button>
             </form>
+            <button class="btn-guest btn-full" onclick="showSection('guest-home')" style="margin-top: 20px;">Continue as a Guest</button>
         </div>
     </section>
 
@@ -211,6 +214,223 @@
                 </div>
             </form>
         </div>
+    </section>
+
+    <!-- Guest Home Page -->
+    <section id="guest-home" class="section">
+        <header class="guest-header">
+            <div class="header-content">
+                <h1 class="header-logo">Serenity Spa</h1>
+                <button class="btn-login-header" onclick="showSection('login')">Login</button>
+            </div>
+        </header>
+
+        <!-- Discount Offers Scroll -->
+        <section class="discount-section">
+            <h2 class="section-title">Special Offers</h2>
+            <div class="discount-scroll" id="discountScroll">
+                <div class="discount-card">
+                    <div class="discount-badge">30% OFF</div>
+                    <h3>Swedish Massage</h3>
+                    <p>Relaxing full-body experience</p>
+                    <span class="discount-price">$70 <span class="original-price">$100</span></span>
+                </div>
+                <div class="discount-card">
+                    <div class="discount-badge">25% OFF</div>
+                    <h3>Deep Tissue</h3>
+                    <p>Target muscle tension relief</p>
+                    <span class="discount-price">$90 <span class="original-price">$120</span></span>
+                </div>
+                <div class="discount-card">
+                    <div class="discount-badge">20% OFF</div>
+                    <h3>Hot Stone</h3>
+                    <p>Warm stones for deep relaxation</p>
+                    <span class="discount-price">$100 <span class="original-price">$125</span></span>
+                </div>
+                <div class="discount-card">
+                    <div class="discount-badge">35% OFF</div>
+                    <h3>Aromatherapy</h3>
+                    <p>Essential oils for wellness</p>
+                    <span class="discount-price">$85 <span class="original-price">$130</span></span>
+                </div>
+                <div class="discount-card">
+                    <div class="discount-badge">15% OFF</div>
+                    <h3>Sports Massage</h3>
+                    <p>For athletes and active individuals</p>
+                    <span class="discount-price">$95 <span class="original-price">$112</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services-section">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid" id="servicesGrid">
+                <div class="service-card">
+                    <div class="service-image" style="background: linear-gradient(135deg, #E8D5C4 0%, #D4C4B0 100%);">
+                        <div class="service-emoji">💆‍♀️</div>
+                    </div>
+                    <h3>Swedish Massage</h3>
+                    <p>Gentle, flowing strokes for complete relaxation</p>
+                    <div class="service-duration">60 min</div>
+                    <button class="btn-book" onclick="handleBookService('Swedish Massage')">Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: linear-gradient(135deg, #C4D5E8 0%, #B0C4D4 100%);">
+                        <div class="service-emoji">💪</div>
+                    </div>
+                    <h3>Deep Tissue</h3>
+                    <p>Intense pressure to release chronic tension</p>
+                    <div class="service-duration">90 min</div>
+                    <button class="btn-book" onclick="handleBookService('Deep Tissue')">Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: linear-gradient(135deg, #D5E8C4 0%, #C4D4B0 100%);">
+                        <div class="service-emoji">🔥</div>
+                    </div>
+                    <h3>Hot Stone</h3>
+                    <p>Heated stones for deep muscle relaxation</p>
+                    <div class="service-duration">75 min</div>
+                    <button class="btn-book" onclick="handleBookService('Hot Stone')">Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: linear-gradient(135deg, #E8C4D5 0%, #D4B0C4 100%);">
+                        <div class="service-emoji">🌿</div>
+                    </div>
+                    <h3>Aromatherapy</h3>
+                    <p>Essential oils enhance your massage experience</p>
+                    <div class="service-duration">60 min</div>
+                    <button class="btn-book" onclick="handleBookService('Aromatherapy')">Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: linear-gradient(135deg, #C4E8D5 0%, #B0D4C4 100%);">
+                        <div class="service-emoji">🏃</div>
+                    </div>
+                    <h3>Sports Massage</h3>
+                    <p>Designed for athletes and active lifestyles</p>
+                    <div class="service-duration">60 min</div>
+                    <button class="btn-book" onclick="handleBookService('Sports Massage')">Book Now</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-image" style="background: linear-gradient(135deg, #D5C4E8 0%, #C4B0D4 100%);">
+                        <div class="service-emoji">✨</div>
+                    </div>
+                    <h3>Thai Massage</h3>
+                    <p>Traditional stretching and acupressure</p>
+                    <div class="service-duration">90 min</div>
+                    <button class="btn-book" onclick="handleBookService('Thai Massage')">Book Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Masseuse Profiles Section -->
+        <section class="masseuse-section">
+            <h2 class="section-title">Meet Our Therapists</h2>
+            <div class="masseuse-grid" id="masseuseGrid">
+                <div class="masseuse-card">
+                    <div class="masseuse-photo" style="background: linear-gradient(135deg, #E8D5C4 0%, #D4C4B0 100%);">
+                        <div class="photo-placeholder">👩</div>
+                    </div>
+                    <h3>Sarah Johnson</h3>
+                    <p class="masseuse-specialty">Swedish & Aromatherapy Specialist</p>
+                    <div class="masseuse-experience">8 years experience</div>
+                    <div class="masseuse-rating">⭐⭐⭐⭐⭐ 4.9</div>
+                </div>
+                <div class="masseuse-card">
+                    <div class="masseuse-photo" style="background: linear-gradient(135deg, #C4D5E8 0%, #B0C4D4 100%);">
+                        <div class="photo-placeholder">👨</div>
+                    </div>
+                    <h3>Michael Chen</h3>
+                    <p class="masseuse-specialty">Deep Tissue & Sports Massage</p>
+                    <div class="masseuse-experience">12 years experience</div>
+                    <div class="masseuse-rating">⭐⭐⭐⭐⭐ 5.0</div>
+                </div>
+                <div class="masseuse-card">
+                    <div class="masseuse-photo" style="background: linear-gradient(135deg, #D5E8C4 0%, #C4D4B0 100%);">
+                        <div class="photo-placeholder">👩</div>
+                    </div>
+                    <h3>Emma Rodriguez</h3>
+                    <p class="masseuse-specialty">Hot Stone & Thai Massage</p>
+                    <div class="masseuse-experience">6 years experience</div>
+                    <div class="masseuse-rating">⭐⭐⭐⭐⭐ 4.8</div>
+                </div>
+                <div class="masseuse-card">
+                    <div class="masseuse-photo" style="background: linear-gradient(135deg, #E8C4D5 0%, #D4B0C4 100%);">
+                        <div class="photo-placeholder">👨</div>
+                    </div>
+                    <h3>David Kim</h3>
+                    <p class="masseuse-specialty">Swedish & Relaxation Therapy</p>
+                    <div class="masseuse-experience">10 years experience</div>
+                    <div class="masseuse-rating">⭐⭐⭐⭐⭐ 4.9</div>
+                </div>
+                <div class="masseuse-card">
+                    <div class="masseuse-photo" style="background: linear-gradient(135deg, #C4E8D5 0%, #B0D4C4 100%);">
+                        <div class="photo-placeholder">👩</div>
+                    </div>
+                    <h3>Lisa Anderson</h3>
+                    <p class="masseuse-specialty">Aromatherapy & Prenatal</p>
+                    <div class="masseuse-experience">7 years experience</div>
+                    <div class="masseuse-rating">⭐⭐⭐⭐⭐ 4.7</div>
+                </div>
+                <div class="masseuse-card">
+                    <div class="masseuse-photo" style="background: linear-gradient(135deg, #D5C4E8 0%, #C4B0D4 100%);">
+                        <div class="photo-placeholder">👨</div>
+                    </div>
+                    <h3>James Wilson</h3>
+                    <p class="masseuse-specialty">Sports & Deep Tissue</p>
+                    <div class="masseuse-experience">9 years experience</div>
+                    <div class="masseuse-rating">⭐⭐⭐⭐⭐ 4.8</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="reviews-container" id="reviewsContainer">
+                <div class="review-card active">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Absolutely amazing experience! Sarah's Swedish massage was exactly what I needed after a stressful week. The atmosphere is so calming and professional."</p>
+                    <div class="review-author">- Jennifer M.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"Michael's deep tissue massage worked wonders on my back pain. I've been coming here for months and always leave feeling renewed."</p>
+                    <div class="review-author">- Robert T.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"The hot stone massage with Emma was incredible! Best massage I've ever had. The whole experience was luxurious and relaxing."</p>
+                    <div class="review-author">- Maria L.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"I love the aromatherapy sessions here. The scents are perfectly chosen and the therapists are all so skilled and friendly."</p>
+                    <div class="review-author">- David K.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="review-text">"As an athlete, the sports massage from James has been a game-changer for my recovery. Highly recommend to anyone active!"</p>
+                    <div class="review-author">- Amanda S.</div>
+                </div>
+            </div>
+            <div class="reviews-pagination">
+                <span class="review-dot active" onclick="goToReview(0)"></span>
+                <span class="review-dot" onclick="goToReview(1)"></span>
+                <span class="review-dot" onclick="goToReview(2)"></span>
+                <span class="review-dot" onclick="goToReview(3)"></span>
+                <span class="review-dot" onclick="goToReview(4)"></span>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Experience Serenity?</h2>
+                <p>Book your appointment today and start your wellness journey</p>
+                <button class="btn-primary btn-large" onclick="handleBookService('General Booking')">Book Appointment</button>
+            </div>
+        </section>
     </section>
 
     <script src="script.js"></script>
