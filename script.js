@@ -1,1330 +1,707 @@
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --color-beige: #F5F0E8;
-    --color-soft-green: #A8C5A0;
-    --color-muted-blue: #B8D4E3;
-    --color-dark-green: #7A9B73;
-    --color-dark-blue: #6B8FA3;
-    --color-text: #2C3E2D;
-    --color-text-light: #6B7C6D;
-    --color-white: #FFFFFF;
-    --color-border: #E0E0E0;
-    --color-selected: #E8F5E9;
-    --border-radius: 16px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: var(--color-text);
-    background-color: var(--color-beige);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* Section Management */
-.section {
-    display: none;
-    min-height: 100vh;
-    width: 100%;
-    animation: fadeIn 0.5s ease;
-}
-
-.section.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+// Section Navigation
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+        window.scrollTo(0, 0);
+        
+        // Initialize section-specific features
+        if (sectionId === 'guest-home') {
+            initializeHomePage();
+        } else if (sectionId === 'booking') {
+            initializeBooking();
+        }
     }
 }
 
-/* Header Styles */
-.guest-header, .booking-header {
-    background: var(--color-white);
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-dark-green);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.header-logo:hover {
-    color: var(--color-soft-green);
-}
-
-.header-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.btn-login-header, .btn-signup-header {
-    padding: 10px 20px;
-    border: 2px solid var(--color-dark-green);
-    border-radius: 12px;
-    background: var(--color-white);
-    color: var(--color-dark-green);
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.95rem;
-}
-
-.btn-login-header:hover {
-    background: var(--color-dark-green);
-    color: var(--color-white);
-}
-
-.btn-signup-header {
-    background: var(--color-dark-green);
-    color: var(--color-white);
-}
-
-.btn-signup-header:hover {
-    background: var(--color-soft-green);
-    border-color: var(--color-soft-green);
-}
-
-/* Hero Section */
-.hero-section {
-    background: linear-gradient(135deg, var(--color-soft-green) 0%, var(--color-muted-blue) 100%);
-    padding: 100px 20px;
-    text-align: center;
-}
-
-.hero-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.hero-title {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--color-text);
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-.hero-subtitle {
-    font-size: 1.3rem;
-    color: var(--color-text-light);
-    margin-bottom: 40px;
-    line-height: 1.6;
-}
-
-.btn-hero {
-    padding: 18px 50px;
-    border: none;
-    border-radius: var(--border-radius);
-    background: var(--color-dark-green);
-    color: var(--color-white);
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 5px 20px rgba(122, 155, 115, 0.3);
-}
-
-.btn-hero:hover {
-    background: var(--color-soft-green);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(122, 155, 115, 0.4);
-}
-
-/* Discount Section */
-.discount-section {
-    padding: 60px 20px;
-    background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-white) 100%);
-}
-
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 15px;
-    color: var(--color-text);
-}
-
-.section-subtitle {
-    text-align: center;
-    color: var(--color-text-light);
-    font-size: 1.1rem;
-    margin-bottom: 40px;
-}
-
-.discount-scroll-wrapper {
-    overflow: hidden;
-    position: relative;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.discount-scroll {
-    display: flex;
-    gap: 25px;
-    padding: 20px 0;
-    animation: scrollDiscounts 30s linear infinite;
-}
-
-@keyframes scrollDiscounts {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-.discount-scroll:hover {
-    animation-play-state: paused;
-}
-
-.discount-card {
-    min-width: 300px;
-    background: var(--color-white);
-    border-radius: var(--border-radius);
-    padding: 30px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    position: relative;
-    transition: var(--transition);
-    flex-shrink: 0;
-}
-
-.discount-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-}
-
-.discount-badge {
-    position: absolute;
-    top: -10px;
-    right: 20px;
-    background: #FF6B6B;
-    color: var(--color-white);
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
-}
-
-.discount-card h3 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--color-text);
-}
-
-.discount-card p {
-    color: var(--color-text-light);
-    margin-bottom: 15px;
-    font-size: 0.95rem;
-}
-
-.discount-price {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--color-dark-green);
-}
-
-.original-price {
-    font-size: 1rem;
-    color: var(--color-text-light);
-    text-decoration: line-through;
-    margin-left: 10px;
-}
-
-/* Services Section */
-.services-section {
-    padding: 80px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.service-card {
-    background: var(--color-white);
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: var(--transition);
-}
-
-.service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-}
-
-.service-image {
-    width: 100%;
-    height: 220px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.service-emoji {
-    font-size: 70px;
-}
-
-.service-card h3 {
-    padding: 25px 25px 10px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-}
-
-.service-card p {
-    padding: 0 25px;
-    color: var(--color-text-light);
-    font-size: 1rem;
-    line-height: 1.7;
-}
-
-.service-duration {
-    padding: 15px 25px;
-    color: var(--color-dark-green);
-    font-weight: 600;
-    font-size: 0.95rem;
-}
-
-.btn-book {
-    width: calc(100% - 50px);
-    margin: 20px 25px 25px;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    background: var(--color-dark-green);
-    color: var(--color-white);
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 1rem;
-}
-
-.btn-book:hover {
-    background: var(--color-soft-green);
-    transform: translateY(-2px);
-}
-
-/* Masseuse Section */
-.masseuse-section {
-    padding: 80px 20px;
-    background: var(--color-white);
-}
-
-.masseuse-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 50px auto 0;
-}
-
-.masseuse-card {
-    background: var(--color-beige);
-    border-radius: var(--border-radius);
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: var(--transition);
-}
-
-.masseuse-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-}
-
-.masseuse-photo {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    margin: 0 auto 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 4px solid var(--color-white);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.photo-placeholder {
-    font-size: 55px;
-}
-
-.masseuse-card h3 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--color-text);
-}
-
-.masseuse-specialty {
-    color: var(--color-dark-green);
-    font-weight: 600;
-    font-size: 1rem;
-    margin-bottom: 12px;
-}
-
-.masseuse-experience {
-    color: var(--color-text-light);
-    font-size: 0.95rem;
-    margin-bottom: 12px;
-}
-
-.masseuse-rating {
-    color: var(--color-dark-green);
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-/* Reviews Section */
-.reviews-section {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, var(--color-beige) 0%, var(--color-muted-blue) 100%);
-}
-
-.reviews-container {
-    max-width: 800px;
-    margin: 50px auto;
-    position: relative;
-    height: 280px;
-    overflow: hidden;
-}
-
-.review-card {
-    position: absolute;
-    width: 100%;
-    background: var(--color-white);
-    border-radius: var(--border-radius);
-    padding: 50px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateX(100px) scale(0.9);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    text-align: center;
-}
-
-.review-card.active {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    z-index: 10;
-}
-
-.review-card.prev {
-    transform: translateX(-100px) scale(0.9);
-}
-
-.review-stars {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
-}
-
-.review-text {
-    font-size: 1.2rem;
-    line-height: 1.9;
-    color: var(--color-text);
-    font-style: italic;
-    margin-bottom: 25px;
-}
-
-.review-author {
-    font-weight: 600;
-    color: var(--color-dark-green);
-    font-size: 1.1rem;
-}
-
-/* CTA Section */
-.cta-section {
-    padding: 100px 20px;
-    background: linear-gradient(135deg, var(--color-dark-green) 0%, var(--color-dark-blue) 100%);
-    text-align: center;
-}
-
-.cta-content {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.cta-content h2 {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--color-white);
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-.cta-content p {
-    font-size: 1.3rem;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 40px;
-    line-height: 1.6;
-}
-
-.btn-large {
-    padding: 20px 60px;
-    font-size: 1.3rem;
-}
-
-/* Booking Page Styles */
-.booking-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-}
-
-.booking-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 10px;
-    color: var(--color-text);
-}
-
-.booking-subtitle {
-    text-align: center;
-    color: var(--color-text-light);
-    font-size: 1.1rem;
-    margin-bottom: 40px;
-}
-
-.booking-steps {
-    display: flex;
-    justify-content: space-between;
-    max-width: 800px;
-    margin: 0 auto 50px;
-    position: relative;
-}
-
-.booking-steps::before {
-    content: '';
-    position: absolute;
-    top: 25px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--color-border);
-    z-index: 0;
-}
-
-.step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-    flex: 1;
-}
-
-.step-number {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--color-white);
-    border: 3px solid var(--color-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: var(--color-text-light);
-    transition: var(--transition);
-    margin-bottom: 10px;
-}
-
-.step.active .step-number {
-    background: var(--color-dark-green);
-    border-color: var(--color-dark-green);
-    color: var(--color-white);
-}
-
-.step-label {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    font-weight: 500;
-}
-
-.step.active .step-label {
-    color: var(--color-dark-green);
-    font-weight: 600;
-}
-
-.booking-step-content {
-    display: none;
-    animation: fadeIn 0.4s ease;
-}
-
-.booking-step-content.active {
-    display: block;
-}
-
-/* Therapist Selection */
-.therapist-selection-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-}
-
-.therapist-select-card {
-    background: var(--color-white);
-    border: 3px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    text-align: center;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.therapist-select-card:hover {
-    border-color: var(--color-dark-green);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.therapist-select-card.selected {
-    border-color: var(--color-dark-green);
-    background: var(--color-selected);
-}
-
-.therapist-select-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 auto 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.therapist-select-card h4 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--color-text);
-}
-
-.therapist-select-card p {
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    margin-bottom: 10px;
-}
-
-.therapist-rating {
-    font-size: 0.85rem;
-    color: var(--color-dark-green);
-    font-weight: 600;
-}
-
-/* Service Selection */
-.service-selection-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-}
-
-.service-select-card {
-    background: var(--color-white);
-    border: 3px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.service-select-card:hover {
-    border-color: var(--color-dark-green);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.service-select-card.selected {
-    border-color: var(--color-dark-green);
-    background: var(--color-selected);
-}
-
-.service-select-card h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--color-text);
-}
-
-.service-select-card p {
-    color: var(--color-text-light);
-    margin-bottom: 15px;
-    font-size: 0.95rem;
-}
-
-.service-select-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-}
-
-.service-select-duration {
-    color: var(--color-dark-green);
-    font-weight: 600;
-}
-
-.service-select-price {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--color-dark-green);
-}
-
-/* Calendar */
-.date-time-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 30px;
-}
-
-.calendar-container {
-    background: var(--color-white);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-}
-
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.calendar-header h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--color-text);
-}
-
-.calendar-nav {
-    background: var(--color-beige);
-    border: none;
-    border-radius: 8px;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: var(--color-dark-green);
-    transition: var(--transition);
-}
-
-.calendar-nav:hover {
-    background: var(--color-dark-green);
-    color: var(--color-white);
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-}
-
-.calendar-day-header {
-    text-align: center;
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-    padding: 10px;
-}
-
-.calendar-day {
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition);
-    font-weight: 500;
-    background: var(--color-beige);
-    color: var(--color-text);
-}
-
-.calendar-day:hover {
-    background: var(--color-soft-green);
-    color: var(--color-white);
-}
-
-.calendar-day.disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.calendar-day.disabled:hover {
-    background: var(--color-beige);
-    color: var(--color-text);
-}
-
-.calendar-day.selected {
-    background: var(--color-dark-green);
-    color: var(--color-white);
-    font-weight: 700;
-}
-
-.calendar-day.today {
-    border: 2px solid var(--color-dark-green);
-}
-
-/* Time Slots */
-.time-slots-container {
-    background: var(--color-white);
-    border-radius: var(--border-radius);
-    padding: 25px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-}
-
-.time-slots-container h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: var(--color-text);
-}
-
-.time-slots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 12px;
-}
-
-.time-slot {
-    padding: 12px;
-    border: 2px solid var(--color-border);
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: var(--transition);
-    font-weight: 500;
-    background: var(--color-white);
-    color: var(--color-text);
-}
-
-.time-slot:hover {
-    border-color: var(--color-dark-green);
-    background: var(--color-beige);
-}
-
-.time-slot.selected {
-    background: var(--color-dark-green);
-    border-color: var(--color-dark-green);
-    color: var(--color-white);
-}
-
-.time-slot.disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.time-slot.disabled:hover {
-    background: var(--color-white);
-    border-color: var(--color-border);
-}
-
-/* Booking Summary */
-.booking-summary {
-    background: var(--color-beige);
-    border-radius: var(--border-radius);
-    padding: 30px;
-    margin-bottom: 30px;
-}
-
-.booking-summary h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: var(--color-text);
-}
-
-.summary-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.summary-item:last-child {
-    border-bottom: none;
-}
-
-.summary-label {
-    font-weight: 600;
-    color: var(--color-text-light);
-}
-
-.summary-value {
-    font-weight: 600;
-    color: var(--color-text);
-}
-
-.summary-total {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 2px solid var(--color-dark-green);
-    font-size: 1.2rem;
-}
-
-/* Booking Navigation */
-.booking-navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-    padding-top: 30px;
-    border-top: 1px solid var(--color-border);
-}
-
-/* Form Styles */
-.form-container {
-    background: var(--color-white);
-    border-radius: var(--border-radius);
-    padding: 40px 30px;
-    max-width: 450px;
-    width: 100%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    margin: 50px auto;
-}
-
-.back-button {
-    background: none;
-    border: none;
-    color: var(--color-dark-green);
-    font-size: 1rem;
-    cursor: pointer;
-    margin-bottom: 20px;
-    padding: 5px;
-    transition: var(--transition);
-}
-
-.back-button:hover {
-    color: var(--color-soft-green);
-    transform: translateX(-5px);
-}
-
-.form-container h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--color-text);
-}
-
-.profile-subtitle, .otp-subtitle {
-    color: var(--color-text-light);
-    font-size: 0.9rem;
-    margin-bottom: 30px;
-}
-
-.form-group {
-    margin-bottom: 25px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: var(--color-text);
-    font-size: 0.95rem;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 14px;
-    border: 2px solid var(--color-border);
-    border-radius: 12px;
-    font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-    transition: var(--transition);
-    background: var(--color-white);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--color-dark-green);
-    box-shadow: 0 0 0 3px rgba(122, 155, 115, 0.1);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-.password-input-wrapper {
-    position: relative;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    padding: 5px;
-}
-
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    accent-color: var(--color-dark-green);
-}
-
-.forgot-password {
-    color: var(--color-dark-green);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: var(--transition);
-}
-
-.forgot-password:hover {
-    color: var(--color-soft-green);
-    text-decoration: underline;
-}
-
-.social-login {
-    margin-top: 30px;
-    padding-top: 30px;
-    border-top: 1px solid var(--color-border);
-}
-
-.divider {
-    text-align: center;
-    color: var(--color-text-light);
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.divider::before,
-.divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 30%;
-    height: 1px;
-    background: var(--color-border);
-}
-
-.divider::before {
-    left: 0;
-}
-
-.divider::after {
-    right: 0;
-}
-
-.social-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.social-btn {
-    padding: 12px;
-    border: 2px solid var(--color-border);
-    border-radius: 12px;
-    background: var(--color-white);
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.social-btn:hover {
-    border-color: var(--color-dark-green);
-    background: var(--color-beige);
-    transform: translateY(-2px);
-}
-
-.social-btn span {
-    font-size: 1.2rem;
-}
-
-.choice-buttons {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.choice-btn {
-    flex: 1;
-    padding: 14px;
-    border: 2px solid var(--color-border);
-    border-radius: 12px;
-    background: var(--color-white);
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: var(--transition);
-}
-
-.choice-btn.active {
-    border-color: var(--color-dark-green);
-    background: var(--color-soft-green);
-    color: var(--color-white);
-}
-
-.choice-btn:hover {
-    border-color: var(--color-dark-green);
-}
-
-.hidden {
-    display: none !important;
-}
-
-.otp-container {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 25px;
-}
-
-.otp-input {
-    width: 50px !important;
-    height: 60px;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    padding: 0;
-}
-
-.otp-timer {
-    text-align: center;
-    margin-bottom: 15px;
-    color: var(--color-text-light);
-    font-size: 0.9rem;
-}
-
-.otp-timer span {
-    font-weight: 600;
-    color: var(--color-dark-green);
-}
-
-.form-actions {
-    display: flex;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.form-actions .btn-secondary,
-.form-actions .btn-primary {
-    flex: 1;
-}
-
-/* Buttons */
-.btn-primary, .btn-secondary {
-    padding: 14px 32px;
-    border: none;
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: 'Inter', sans-serif;
-}
-
-.btn-primary {
-    background: var(--color-dark-green);
-    color: var(--color-white);
-}
-
-.btn-primary:hover {
-    background: var(--color-soft-green);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(122, 155, 115, 0.3);
-}
-
-.btn-secondary {
-    background: var(--color-white);
-    color: var(--color-dark-green);
-    border: 2px solid var(--color-dark-green);
-}
-
-.btn-secondary:hover {
-    background: var(--color-beige);
-    transform: translateY(-2px);
-}
-
-.btn-full {
-    width: 100%;
-    margin-top: 10px;
-}
-
-.btn-link {
-    background: none;
-    border: none;
-    color: var(--color-dark-green);
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-decoration: underline;
-    padding: 10px;
-    margin: 10px 0;
-}
-
-.btn-link:hover {
-    color: var(--color-soft-green);
-}
-
-.btn-link:disabled {
-    color: var(--color-text-light);
-    cursor: not-allowed;
-    text-decoration: none;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 2rem;
+// Home Page Initialization
+function initializeHomePage() {
+    initializeReviews();
+}
+
+// Reviews Auto-Scroll (Smooth Infinite Loop)
+let currentReview = 0;
+let reviewInterval;
+const totalReviews = 5;
+
+function initializeReviews() {
+    const reviews = document.querySelectorAll('.review-card');
+    if (reviews.length === 0) return;
+    
+    // Reset to first review
+    goToReview(0);
+    
+    // Clear any existing interval
+    if (reviewInterval) {
+        clearInterval(reviewInterval);
     }
     
-    .hero-subtitle {
-        font-size: 1.1rem;
+    // Start auto-advance
+    reviewInterval = setInterval(() => {
+        if (document.getElementById('guest-home') && document.getElementById('guest-home').classList.contains('active')) {
+            currentReview = (currentReview + 1) % totalReviews;
+            goToReview(currentReview);
+        }
+    }, 5000);
+}
+
+function goToReview(index) {
+    const reviews = document.querySelectorAll('.review-card');
+    reviews.forEach((review, i) => {
+        review.classList.remove('active', 'prev');
+        if (i === index) {
+            review.classList.add('active');
+        } else if (i === (index - 1 + totalReviews) % totalReviews) {
+            review.classList.add('prev');
+        }
+    });
+    currentReview = index;
+}
+
+// Booking System
+let bookingData = {
+    therapist: null,
+    service: null,
+    date: null,
+    time: null
+};
+
+let currentStep = 1;
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+
+// Therapist Data with Services and Availability
+const therapistData = {
+    sarah: {
+        name: 'Sarah Johnson',
+        services: [
+            { id: 'swedish', name: 'Swedish Massage', duration: 60, price: 100 },
+            { id: 'aromatherapy', name: 'Aromatherapy', duration: 60, price: 130 }
+        ],
+        availableDays: [1, 2, 3, 4, 5],
+        availableTimes: ['09:00', '11:00', '14:00', '16:00', '18:00']
+    },
+    michael: {
+        name: 'Michael Chen',
+        services: [
+            { id: 'deep-tissue', name: 'Deep Tissue', duration: 90, price: 120 },
+            { id: 'sports', name: 'Sports Massage', duration: 60, price: 112 }
+        ],
+        availableDays: [1, 2, 3, 4, 5, 6],
+        availableTimes: ['10:00', '12:00', '15:00', '17:00', '19:00']
+    },
+    emma: {
+        name: 'Emma Rodriguez',
+        services: [
+            { id: 'hot-stone', name: 'Hot Stone', duration: 75, price: 125 },
+            { id: 'thai', name: 'Thai Massage', duration: 90, price: 140 }
+        ],
+        availableDays: [0, 1, 2, 3, 4, 5, 6],
+        availableTimes: ['09:00', '11:00', '13:00', '15:00', '17:00', '19:00']
+    },
+    david: {
+        name: 'David Kim',
+        services: [
+            { id: 'swedish', name: 'Swedish Massage', duration: 60, price: 100 },
+            { id: 'relaxation', name: 'Relaxation Therapy', duration: 60, price: 110 }
+        ],
+        availableDays: [1, 2, 3, 4, 5],
+        availableTimes: ['10:00', '12:00', '14:00', '16:00', '18:00']
+    },
+    lisa: {
+        name: 'Lisa Anderson',
+        services: [
+            { id: 'aromatherapy', name: 'Aromatherapy', duration: 60, price: 130 },
+            { id: 'prenatal', name: 'Prenatal Massage', duration: 75, price: 135 }
+        ],
+        availableDays: [1, 2, 3, 4, 5],
+        availableTimes: ['09:00', '11:00', '14:00', '16:00']
+    },
+    james: {
+        name: 'James Wilson',
+        services: [
+            { id: 'sports', name: 'Sports Massage', duration: 60, price: 112 },
+            { id: 'deep-tissue', name: 'Deep Tissue', duration: 90, price: 120 }
+        ],
+        availableDays: [1, 2, 3, 4, 5, 6],
+        availableTimes: ['10:00', '12:00', '15:00', '17:00', '19:00']
+    }
+};
+
+function initializeBooking() {
+    currentStep = 1;
+    bookingData = { therapist: null, service: null, date: null, time: null };
+    updateBookingSteps();
+    showBookingStep(1);
+}
+
+function selectTherapist(therapistId) {
+    bookingData.therapist = therapistId;
+    
+    // Update UI
+    document.querySelectorAll('.therapist-select-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    
+    // Show services for this therapist
+    showServicesForTherapist(therapistId);
+    
+    // Move to next step
+    setTimeout(() => {
+        nextStep();
+    }, 300);
+}
+
+function showServicesForTherapist(therapistId) {
+    const therapist = therapistData[therapistId];
+    const serviceGrid = document.getElementById('serviceSelectionGrid');
+    
+    if (!therapist || !serviceGrid) return;
+    
+    serviceGrid.innerHTML = therapist.services.map(service => `
+        <div class="service-select-card" onclick="selectService('${service.id}', '${therapistId}')">
+            <h4>${service.name}</h4>
+            <p>Professional ${service.name.toLowerCase()} therapy</p>
+            <div class="service-select-info">
+                <span class="service-select-duration">${service.duration} min</span>
+                <span class="service-select-price">$${service.price}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function selectService(serviceId, therapistId) {
+    const therapist = therapistData[therapistId];
+    const service = therapist.services.find(s => s.id === serviceId);
+    
+    bookingData.service = serviceId;
+    bookingData.serviceData = service;
+    
+    // Update UI
+    document.querySelectorAll('.service-select-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    
+    // Move to next step
+    setTimeout(() => {
+        nextStep();
+    }, 300);
+}
+
+function showBookingStep(step) {
+    document.querySelectorAll('.booking-step-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    const stepContent = document.getElementById(`step${step}`);
+    if (stepContent) {
+        stepContent.classList.add('active');
     }
     
-    .section-title {
-        font-size: 2rem;
+    // Show/hide navigation buttons
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (step === 1) {
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+    } else if (step === 4) {
+        if (prevBtn) prevBtn.style.display = 'block';
+        if (nextBtn) nextBtn.style.display = 'none';
+        updateBookingSummary();
+    } else {
+        if (prevBtn) prevBtn.style.display = 'block';
+        if (nextBtn) nextBtn.style.display = 'block';
     }
     
-    .discount-card {
-        min-width: 250px;
-    }
-    
-    .services-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .masseuse-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-    
-    .review-card {
-        padding: 30px 20px;
-    }
-    
-    .review-text {
-        font-size: 1rem;
-    }
-    
-    .cta-content h2 {
-        font-size: 2rem;
-    }
-    
-    .cta-content p {
-        font-size: 1rem;
-    }
-    
-    .date-time-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .therapist-selection-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    }
-    
-    .booking-steps {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-    
-    .booking-steps::before {
-        display: none;
-    }
-    
-    .header-actions {
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    .btn-login-header, .btn-signup-header {
-        font-size: 0.85rem;
-        padding: 8px 15px;
+    // Initialize step-specific content
+    if (step === 3) {
+        generateCalendar();
+        updateTimeSlots();
     }
 }
 
-@media (max-width: 480px) {
-    .discount-card {
-        min-width: 220px;
-    }
-    
-    .masseuse-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .reviews-container {
-        height: 320px;
-    }
-    
-    .therapist-selection-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .service-selection-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .time-slots-grid {
-        grid-template-columns: repeat(3, 1fr);
+function updateBookingSteps() {
+    document.querySelectorAll('.step').forEach((step, index) => {
+        const stepNum = index + 1;
+        if (stepNum < currentStep) {
+            step.classList.add('completed');
+            step.classList.remove('active');
+        } else if (stepNum === currentStep) {
+            step.classList.add('active');
+            step.classList.remove('completed');
+        } else {
+            step.classList.remove('active', 'completed');
+        }
+    });
+}
+
+function nextStep() {
+    if (currentStep < 4) {
+        currentStep++;
+        updateBookingSteps();
+        showBookingStep(currentStep);
     }
 }
+
+function previousStep() {
+    if (currentStep > 1) {
+        currentStep--;
+        updateBookingSteps();
+        showBookingStep(currentStep);
+    }
+}
+
+// Calendar Functions
+function generateCalendar() {
+    const calendarGrid = document.getElementById('calendarGrid');
+    if (!calendarGrid) return;
+    
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    const monthHeader = document.getElementById('calendarMonth');
+    if (monthHeader) {
+        monthHeader.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    }
+    
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const today = new Date();
+    const isCurrentMonth = today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+    
+    let html = '<div class="calendar-day-header">Sun</div>';
+    html += '<div class="calendar-day-header">Mon</div>';
+    html += '<div class="calendar-day-header">Tue</div>';
+    html += '<div class="calendar-day-header">Wed</div>';
+    html += '<div class="calendar-day-header">Thu</div>';
+    html += '<div class="calendar-day-header">Fri</div>';
+    html += '<div class="calendar-day-header">Sat</div>';
+    
+    // Empty cells for days before month starts
+    for (let i = 0; i < firstDay; i++) {
+        html += '<div class="calendar-day"></div>';
+    }
+    
+    // Days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(currentYear, currentMonth, day);
+        const dayOfWeek = date.getDay();
+        const isPast = date < today && !(isCurrentMonth && day === today.getDate());
+        const isAvailable = bookingData.therapist && 
+            therapistData[bookingData.therapist].availableDays.includes(dayOfWeek);
+        
+        let classes = 'calendar-day';
+        if (isPast) {
+            classes += ' disabled';
+        } else if (isCurrentMonth && day === today.getDate()) {
+            classes += ' today';
+        }
+        if (bookingData.date && bookingData.date === `${currentYear}-${currentMonth}-${day}`) {
+            classes += ' selected';
+        }
+        
+        const onclick = (isPast || !isAvailable) ? '' : `onclick="selectDate(${day}, ${currentMonth}, ${currentYear})"`;
+        const style = (isPast || !isAvailable) ? 'style="opacity: 0.3; cursor: not-allowed;"' : '';
+        
+        html += `<div class="${classes}" ${onclick} ${style}>${day}</div>`;
+    }
+    
+    calendarGrid.innerHTML = html;
+}
+
+function changeMonth(direction) {
+    currentMonth += direction;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    generateCalendar();
+    updateTimeSlots();
+}
+
+function selectDate(day, month, year) {
+    const date = new Date(year, month, day);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (date < today) return;
+    
+    if (!bookingData.therapist) return;
+    
+    const therapist = therapistData[bookingData.therapist];
+    const dayOfWeek = date.getDay();
+    
+    if (!therapist.availableDays.includes(dayOfWeek)) return;
+    
+    bookingData.date = `${year}-${month}-${day}`;
+    bookingData.dateObj = date;
+    
+    generateCalendar();
+    updateTimeSlots();
+}
+
+function updateTimeSlots() {
+    const timeSlotsGrid = document.getElementById('timeSlotsGrid');
+    if (!timeSlotsGrid) return;
+    
+    if (!bookingData.therapist || !bookingData.date) {
+        timeSlotsGrid.innerHTML = '<p style="text-align: center; color: var(--color-text-light);">Please select a date first</p>';
+        return;
+    }
+    
+    const therapist = therapistData[bookingData.therapist];
+    const selectedDate = bookingData.dateObj || new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const isToday = selectedDate.getTime() === today.getTime();
+    const currentHour = new Date().getHours();
+    
+    const availableTimes = therapist.availableTimes.filter(time => {
+        if (isToday) {
+            const timeHour = parseInt(time.split(':')[0]);
+            return timeHour > currentHour;
+        }
+        return true;
+    });
+    
+    if (availableTimes.length === 0) {
+        timeSlotsGrid.innerHTML = '<p style="text-align: center; color: var(--color-text-light);">No available times for this date</p>';
+        return;
+    }
+    
+    timeSlotsGrid.innerHTML = availableTimes.map(time => {
+        const isSelected = bookingData.time === time;
+        return `<div class="time-slot ${isSelected ? 'selected' : ''}" onclick="selectTime('${time}')">${time}</div>`;
+    }).join('');
+}
+
+function selectTime(time) {
+    bookingData.time = time;
+    updateTimeSlots();
+    
+    // Auto-advance to confirmation after a short delay
+    setTimeout(() => {
+        if (bookingData.date && bookingData.time) {
+            nextStep();
+        }
+    }, 500);
+}
+
+function updateBookingSummary() {
+    const summary = document.getElementById('bookingSummary');
+    if (!summary || !bookingData.therapist || !bookingData.serviceData) return;
+    
+    const therapist = therapistData[bookingData.therapist];
+    const service = bookingData.serviceData;
+    const date = bookingData.dateObj || new Date();
+    const dateStr = date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    
+    summary.innerHTML = `
+        <h4>Booking Summary</h4>
+        <div class="summary-item">
+            <span class="summary-label">Therapist:</span>
+            <span class="summary-value">${therapist.name}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Service:</span>
+            <span class="summary-value">${service.name}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Duration:</span>
+            <span class="summary-value">${service.duration} minutes</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Date:</span>
+            <span class="summary-value">${dateStr}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Time:</span>
+            <span class="summary-value">${bookingData.time}</span>
+        </div>
+        <div class="summary-item summary-total">
+            <span class="summary-label">Total:</span>
+            <span class="summary-value">$${service.price}</span>
+        </div>
+    `;
+}
+
+function confirmBooking() {
+    const name = document.getElementById('bookingName').value;
+    const email = document.getElementById('bookingEmail').value;
+    const phone = document.getElementById('bookingPhone').value;
+    const address = document.getElementById('bookingAddress').value;
+    
+    if (!name || !email || !phone || !address) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
+    const bookingInfo = {
+        ...bookingData,
+        customer: { name, email, phone, address }
+    };
+    
+    console.log('Booking confirmed:', bookingInfo);
+    
+    alert(`Booking confirmed!\n\n${therapistData[bookingData.therapist].name} will arrive at ${bookingData.time} on ${bookingData.dateObj.toLocaleDateString()}.\n\nA confirmation email has been sent to ${email}.\n\nThank you for choosing Serenity Spa!`);
+    
+    // Reset and go back to home
+    showSection('guest-home');
+}
+
+// Login/Signup Functions
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    console.log('Login attempt:', { email });
+    alert('Login successful! (This is a demo)');
+    showSection('guest-home');
+}
+
+function handleSignup(event) {
+    event.preventDefault();
+    const email = document.getElementById('signupEmail').value;
+    const phone = document.getElementById('signupPhone').value;
+    const acceptTerms = document.getElementById('acceptTerms').checked;
+    
+    if (!acceptTerms) {
+        alert('Please accept the Terms & Conditions');
+        return;
+    }
+    
+    const target = selectedSignupMethod === 'email' ? email : phone;
+    if (!target) {
+        alert('Please enter your email or phone number');
+        return;
+    }
+    
+    sessionStorage.setItem('signupTarget', target);
+    sessionStorage.setItem('signupMethod', selectedSignupMethod);
+    
+    showSection('otp');
+    initializeOTP();
+}
+
+let selectedSignupMethod = 'email';
+
+function selectSignupMethod(method, event) {
+    selectedSignupMethod = method;
+    
+    document.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+    
+    const emailGroup = document.getElementById('emailGroup');
+    const phoneGroup = document.getElementById('phoneGroup');
+    const emailInput = document.getElementById('signupEmail');
+    const phoneInput = document.getElementById('signupPhone');
+    
+    if (method === 'email') {
+        if (emailGroup) emailGroup.classList.remove('hidden');
+        if (phoneGroup) phoneGroup.classList.add('hidden');
+        if (emailInput) emailInput.required = true;
+        if (phoneInput) phoneInput.required = false;
+        if (phoneInput) phoneInput.value = '';
+    } else {
+        if (emailGroup) emailGroup.classList.add('hidden');
+        if (phoneGroup) phoneGroup.classList.remove('hidden');
+        if (emailInput) emailInput.required = false;
+        if (phoneInput) phoneInput.required = true;
+        if (emailInput) emailInput.value = '';
+    }
+}
+
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    
+    const button = input.nextElementSibling;
+    if (!button) return;
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        button.textContent = '🙈';
+    } else {
+        input.type = 'password';
+        button.textContent = '👁️';
+    }
+}
+
+// OTP Functions
+let otpTimer;
+let otpTimeLeft = 30;
+
+function initializeOTP() {
+    const target = sessionStorage.getItem('signupTarget');
+    const otpTarget = document.getElementById('otpTarget');
+    if (otpTarget) {
+        otpTarget.textContent = target || 'your device';
+    }
+    
+    const otpInputs = document.querySelectorAll('.otp-input');
+    otpInputs.forEach(input => {
+        input.value = '';
+        input.removeEventListener('input', handleOTPInput);
+        input.removeEventListener('keydown', handleOTPKeydown);
+        input.addEventListener('input', handleOTPInput);
+        input.addEventListener('keydown', handleOTPKeydown);
+    });
+    
+    if (otpInputs[0]) {
+        otpInputs[0].focus();
+    }
+    
+    otpTimeLeft = 30;
+    const timer = document.getElementById('timer');
+    if (timer) {
+        timer.textContent = otpTimeLeft;
+    }
+    
+    const resendBtn = document.getElementById('resendBtn');
+    if (resendBtn) {
+        resendBtn.disabled = true;
+    }
+    
+    clearInterval(otpTimer);
+    otpTimer = setInterval(updateOTPTimer, 1000);
+}
+
+function handleOTPInput(event) {
+    const input = event.target;
+    const value = input.value.replace(/[^0-9]/g, '');
+    input.value = value;
+    
+    if (value && input.nextElementSibling && input.nextElementSibling.classList.contains('otp-input')) {
+        input.nextElementSibling.focus();
+    }
+}
+
+function handleOTPKeydown(event) {
+    const input = event.target;
+    if (event.key === 'Backspace' && !input.value && input.previousElementSibling) {
+        input.previousElementSibling.focus();
+    }
+}
+
+function updateOTPTimer() {
+    otpTimeLeft--;
+    const timer = document.getElementById('timer');
+    if (timer) {
+        timer.textContent = otpTimeLeft;
+    }
+    
+    if (otpTimeLeft <= 0) {
+        clearInterval(otpTimer);
+        const resendBtn = document.getElementById('resendBtn');
+        if (resendBtn) {
+            resendBtn.disabled = false;
+        }
+    }
+}
+
+function resendOTP() {
+    otpTimeLeft = 30;
+    const timer = document.getElementById('timer');
+    if (timer) {
+        timer.textContent = otpTimeLeft;
+    }
+    
+    const resendBtn = document.getElementById('resendBtn');
+    if (resendBtn) {
+        resendBtn.disabled = true;
+    }
+    
+    const otpInputs = document.querySelectorAll('.otp-input');
+    otpInputs.forEach(input => {
+        input.value = '';
+    });
+    if (otpInputs[0]) {
+        otpInputs[0].focus();
+    }
+    
+    clearInterval(otpTimer);
+    otpTimer = setInterval(updateOTPTimer, 1000);
+    
+    alert('OTP resent!');
+}
+
+function handleOTP(event) {
+    event.preventDefault();
+    
+    const otpInputs = document.querySelectorAll('.otp-input');
+    let otpValue = '';
+    otpInputs.forEach(input => {
+        otpValue += input.value;
+    });
+    
+    if (otpValue.length !== 6) {
+        alert('Please enter the complete 6-digit OTP code');
+        return;
+    }
+    
+    alert('OTP verified successfully!');
+    showSection('profile');
+    
+    const target = sessionStorage.getItem('signupTarget');
+    const method = sessionStorage.getItem('signupMethod');
+    
+    if (method === 'email') {
+        const profileEmail = document.getElementById('profileEmail');
+        if (profileEmail) {
+            profileEmail.value = target;
+        }
+    } else {
+        const profilePhone = document.getElementById('profilePhone');
+        if (profilePhone) {
+            profilePhone.value = target;
+        }
+    }
+}
+
+function handleProfile(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('profileName').value;
+    const age = document.getElementById('profileAge').value;
+    const email = document.getElementById('profileEmail').value;
+    const phone = document.getElementById('profilePhone').value;
+    const address = document.getElementById('profileAddress').value;
+    
+    console.log('Profile data:', { name, age, email, phone, address });
+    alert('Profile setup complete! Welcome to Serenity Spa!');
+    showSection('guest-home');
+}
+
+function skipProfile() {
+    if (confirm('Are you sure you want to skip profile setup? You can complete it later.')) {
+        alert('Welcome to Serenity Spa!');
+        showSection('guest-home');
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    showSection('guest-home');
+    document.documentElement.style.scrollBehavior = 'smooth';
+    console.log('Serenity Spa Website Loaded');
+});
