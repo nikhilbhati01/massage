@@ -3,261 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wellness & Massage - Your Comfort Matters</title>
+    <title>Serenity Spa - At-Home Massage Services</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Landing / Splash Section -->
-    <section id="landing" class="section active">
-        <div class="landing-content">
-            <div class="logo">
-                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="40" cy="40" r="35" fill="#A8C5A0" opacity="0.3"/>
-                    <path d="M40 20 L40 60 M20 40 L60 40" stroke="#7A9B73" stroke-width="3" stroke-linecap="round"/>
-                    <circle cx="40" cy="40" r="8" fill="#7A9B73"/>
-                </svg>
-            </div>
-            <h1 class="brand-name">Serenity Spa</h1>
-            <p class="tagline">Because your comfort matters</p>
-            <button class="scroll-indicator" onclick="showSection('onboarding')">
-                <span>↓</span>
-            </button>
-        </div>
-    </section>
-
-    <!-- Onboarding / Marketing Carousel -->
-    <section id="onboarding" class="section">
-        <div class="carousel-container">
-            <div class="carousel-slide active" data-slide="0">
-                <div class="slide-image" style="background: linear-gradient(135deg, #E8D5C4 0%, #D4C4B0 100%);">
-                    <div class="placeholder-image">💆</div>
-                </div>
-                <h2 class="slide-headline">Relax & Rejuvenate</h2>
-                <p class="slide-text">Experience the ultimate relaxation with our professional massage services</p>
-            </div>
-            <div class="carousel-slide" data-slide="1">
-                <div class="slide-image" style="background: linear-gradient(135deg, #C4D5E8 0%, #B0C4D4 100%);">
-                    <div class="placeholder-image">🌿</div>
-                </div>
-                <h2 class="slide-headline">Wellness That Matters</h2>
-                <p class="slide-text">Your health and comfort are our top priorities</p>
-            </div>
-            <div class="carousel-slide" data-slide="2">
-                <div class="slide-image" style="background: linear-gradient(135deg, #D5E8C4 0%, #C4D4B0 100%);">
-                    <div class="placeholder-image">✨</div>
-                </div>
-                <h2 class="slide-headline">Book Anytime</h2>
-                <p class="slide-text">Easy booking and flexible scheduling to fit your lifestyle</p>
-            </div>
-            <div class="carousel-slide" data-slide="3">
-                <div class="slide-image" style="background: linear-gradient(135deg, #E8C4D5 0%, #D4B0C4 100%);">
-                    <div class="placeholder-image">❤️</div>
-                </div>
-                <h2 class="slide-headline">Expert Therapists</h2>
-                <p class="slide-text">Trained professionals dedicated to your wellness journey</p>
-            </div>
-            
-            <div class="carousel-pagination">
-                <span class="dot active" onclick="goToSlide(0)"></span>
-                <span class="dot" onclick="goToSlide(1)"></span>
-                <span class="dot" onclick="goToSlide(2)"></span>
-                <span class="dot" onclick="goToSlide(3)"></span>
-            </div>
-            
-            <div class="carousel-buttons">
-                <button class="btn-secondary" onclick="showSection('login')">Login</button>
-                <button class="btn-primary" onclick="showSection('signup')">Sign Up</button>
-            </div>
-            <button class="btn-guest" onclick="showSection('guest-home')">Continue as a Guest</button>
-        </div>
-    </section>
-
-    <!-- Login Page -->
-    <section id="login" class="section">
-        <div class="form-container">
-            <button class="back-button" onclick="showSection('onboarding')">← Back</button>
-            <h2>Welcome Back</h2>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="loginEmail">Email or Phone Number</label>
-                    <input type="text" id="loginEmail" placeholder="Enter email or phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="loginPassword">Password</label>
-                    <div class="password-input-wrapper">
-                        <input type="password" id="loginPassword" placeholder="Enter password" required>
-                        <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">👁️</button>
-                    </div>
-                </div>
-                <div class="form-options">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="rememberMe">
-                        <span>Remember Me</span>
-                    </label>
-                    <a href="#" class="forgot-password" onclick="alert('Password reset feature coming soon!'); return false;">Forgot Password?</a>
-                </div>
-                <button type="submit" class="btn-primary btn-full">Login</button>
-            </form>
-            
-            <div class="social-login">
-                <p class="divider">Or continue with</p>
-                <div class="social-buttons">
-                    <button class="social-btn" onclick="alert('Google login coming soon!');">
-                        <span>🔵</span> Google
-                    </button>
-                    <button class="social-btn" onclick="alert('Facebook login coming soon!');">
-                        <span>🔵</span> Facebook
-                    </button>
-                    <button class="social-btn" onclick="alert('42 login coming soon!');">
-                        <span>🔵</span> 42
-                    </button>
-                </div>
-            </div>
-            <button class="btn-guest btn-full" onclick="showSection('guest-home')" style="margin-top: 20px;">Continue as a Guest</button>
-        </div>
-    </section>
-
-    <!-- Sign Up Page -->
-    <section id="signup" class="section">
-        <div class="form-container">
-            <button class="back-button" onclick="showSection('onboarding')">← Back</button>
-            <h2>Create Account</h2>
-            <form id="signupForm" onsubmit="handleSignup(event)">
-                <div class="form-group">
-                    <label>Sign up with</label>
-                    <div class="choice-buttons">
-                        <button type="button" class="choice-btn active" onclick="selectSignupMethod('email')">
-                            📧 Email
-                        </button>
-                        <button type="button" class="choice-btn" onclick="selectSignupMethod('phone')">
-                            📱 Phone
-                        </button>
-                    </div>
-                </div>
-                <div class="form-group" id="emailGroup">
-                    <label for="signupEmail">Email Address</label>
-                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group hidden" id="phoneGroup">
-                    <label for="signupPhone">Phone Number</label>
-                    <input type="tel" id="signupPhone" placeholder="Enter your phone number" required>
-                </div>
-                <div class="form-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="acceptTerms" required>
-                        <span>I accept the Terms & Conditions</span>
-                    </label>
-                </div>
-                <button type="submit" class="btn-primary btn-full">Continue</button>
-            </form>
-            <button class="btn-guest btn-full" onclick="showSection('guest-home')" style="margin-top: 20px;">Continue as a Guest</button>
-        </div>
-    </section>
-
-    <!-- OTP Verification Page -->
-    <section id="otp" class="section">
-        <div class="form-container">
-            <button class="back-button" onclick="showSection('signup')">← Back</button>
-            <h2>Verify Your Account</h2>
-            <p class="otp-subtitle">Enter the verification code sent to <span id="otpTarget"></span></p>
-            <form id="otpForm" onsubmit="handleOTP(event)">
-                <div class="otp-container">
-                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
-                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
-                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
-                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
-                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
-                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
-                </div>
-                <div class="otp-timer">
-                    <p>Resend code in <span id="timer">30</span>s</p>
-                </div>
-                <button type="button" class="btn-link" id="resendBtn" onclick="resendOTP()" disabled>Resend OTP</button>
-                <button type="submit" class="btn-primary btn-full">Verify</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Profile Setup Page -->
-    <section id="profile" class="section">
-        <div class="form-container">
-            <button class="back-button" onclick="showSection('otp')">← Back</button>
-            <h2>Complete Your Profile</h2>
-            <p class="profile-subtitle">Help us personalize your experience</p>
-            <form id="profileForm" onsubmit="handleProfile(event)">
-                <div class="form-group">
-                    <label for="profileName">Full Name</label>
-                    <input type="text" id="profileName" placeholder="Enter your full name" required>
-                </div>
-                <div class="form-group">
-                    <label for="profileAge">Age</label>
-                    <input type="number" id="profileAge" placeholder="Enter your age" min="18" max="120" required>
-                </div>
-                <div class="form-group">
-                    <label for="profileEmail">Email</label>
-                    <input type="email" id="profileEmail" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label for="profilePhone">Phone Number</label>
-                    <input type="tel" id="profilePhone" placeholder="Enter your phone number" required>
-                </div>
-                <div class="form-group">
-                    <label for="profileAddress">Address</label>
-                    <textarea id="profileAddress" placeholder="Enter your address" rows="3" required></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn-secondary" onclick="skipProfile()">Skip</button>
-                    <button type="submit" class="btn-primary">Complete Setup</button>
-                </div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Guest Home Page -->
-    <section id="guest-home" class="section">
+    <!-- Guest Home Page (Default Landing) -->
+    <section id="guest-home" class="section active">
         <header class="guest-header">
             <div class="header-content">
-                <h1 class="header-logo">Serenity Spa</h1>
-                <button class="btn-login-header" onclick="showSection('login')">Login</button>
+                <h1 class="header-logo" onclick="showSection('guest-home')">Serenity Spa</h1>
+                <div class="header-actions">
+                    <button class="btn-login-header" onclick="showSection('login')">Login</button>
+                    <button class="btn-signup-header" onclick="showSection('signup')">Sign Up</button>
+                </div>
             </div>
         </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="hero-title">Relaxation Delivered to Your Door</h2>
+                <p class="hero-subtitle">Professional massage therapy in the comfort of your home, office, or dorm</p>
+                <button class="btn-hero" onclick="showSection('booking')">Book Your Massage</button>
+            </div>
+        </section>
 
         <!-- Discount Offers Scroll -->
         <section class="discount-section">
             <h2 class="section-title">Special Offers</h2>
-            <div class="discount-scroll" id="discountScroll">
-                <div class="discount-card">
-                    <div class="discount-badge">30% OFF</div>
-                    <h3>Swedish Massage</h3>
-                    <p>Relaxing full-body experience</p>
-                    <span class="discount-price">$70 <span class="original-price">$100</span></span>
-                </div>
-                <div class="discount-card">
-                    <div class="discount-badge">25% OFF</div>
-                    <h3>Deep Tissue</h3>
-                    <p>Target muscle tension relief</p>
-                    <span class="discount-price">$90 <span class="original-price">$120</span></span>
-                </div>
-                <div class="discount-card">
-                    <div class="discount-badge">20% OFF</div>
-                    <h3>Hot Stone</h3>
-                    <p>Warm stones for deep relaxation</p>
-                    <span class="discount-price">$100 <span class="original-price">$125</span></span>
-                </div>
-                <div class="discount-card">
-                    <div class="discount-badge">35% OFF</div>
-                    <h3>Aromatherapy</h3>
-                    <p>Essential oils for wellness</p>
-                    <span class="discount-price">$85 <span class="original-price">$130</span></span>
-                </div>
-                <div class="discount-card">
-                    <div class="discount-badge">15% OFF</div>
-                    <h3>Sports Massage</h3>
-                    <p>For athletes and active individuals</p>
-                    <span class="discount-price">$95 <span class="original-price">$112</span></span>
+            <div class="discount-scroll-wrapper">
+                <div class="discount-scroll" id="discountScroll">
+                    <div class="discount-card">
+                        <div class="discount-badge">30% OFF</div>
+                        <h3>Swedish Massage</h3>
+                        <p>Relaxing full-body experience</p>
+                        <span class="discount-price">$70 <span class="original-price">$100</span></span>
+                    </div>
+                    <div class="discount-card">
+                        <div class="discount-badge">25% OFF</div>
+                        <h3>Deep Tissue</h3>
+                        <p>Target muscle tension relief</p>
+                        <span class="discount-price">$90 <span class="original-price">$120</span></span>
+                    </div>
+                    <div class="discount-card">
+                        <div class="discount-badge">20% OFF</div>
+                        <h3>Hot Stone</h3>
+                        <p>Warm stones for deep relaxation</p>
+                        <span class="discount-price">$100 <span class="original-price">$125</span></span>
+                    </div>
+                    <div class="discount-card">
+                        <div class="discount-badge">35% OFF</div>
+                        <h3>Aromatherapy</h3>
+                        <p>Essential oils for wellness</p>
+                        <span class="discount-price">$85 <span class="original-price">$130</span></span>
+                    </div>
+                    <div class="discount-card">
+                        <div class="discount-badge">15% OFF</div>
+                        <h3>Sports Massage</h3>
+                        <p>For athletes and active individuals</p>
+                        <span class="discount-price">$95 <span class="original-price">$112</span></span>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="discount-card">
+                        <div class="discount-badge">30% OFF</div>
+                        <h3>Swedish Massage</h3>
+                        <p>Relaxing full-body experience</p>
+                        <span class="discount-price">$70 <span class="original-price">$100</span></span>
+                    </div>
+                    <div class="discount-card">
+                        <div class="discount-badge">25% OFF</div>
+                        <h3>Deep Tissue</h3>
+                        <p>Target muscle tension relief</p>
+                        <span class="discount-price">$90 <span class="original-price">$120</span></span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -265,6 +86,7 @@
         <!-- Services Section -->
         <section class="services-section">
             <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Choose from our range of professional massage therapies</p>
             <div class="services-grid" id="servicesGrid">
                 <div class="service-card">
                     <div class="service-image" style="background: linear-gradient(135deg, #E8D5C4 0%, #D4C4B0 100%);">
@@ -273,7 +95,7 @@
                     <h3>Swedish Massage</h3>
                     <p>Gentle, flowing strokes for complete relaxation</p>
                     <div class="service-duration">60 min</div>
-                    <button class="btn-book" onclick="handleBookService('Swedish Massage')">Book Now</button>
+                    <button class="btn-book" onclick="showSection('booking')">Book Now</button>
                 </div>
                 <div class="service-card">
                     <div class="service-image" style="background: linear-gradient(135deg, #C4D5E8 0%, #B0C4D4 100%);">
@@ -282,7 +104,7 @@
                     <h3>Deep Tissue</h3>
                     <p>Intense pressure to release chronic tension</p>
                     <div class="service-duration">90 min</div>
-                    <button class="btn-book" onclick="handleBookService('Deep Tissue')">Book Now</button>
+                    <button class="btn-book" onclick="showSection('booking')">Book Now</button>
                 </div>
                 <div class="service-card">
                     <div class="service-image" style="background: linear-gradient(135deg, #D5E8C4 0%, #C4D4B0 100%);">
@@ -291,7 +113,7 @@
                     <h3>Hot Stone</h3>
                     <p>Heated stones for deep muscle relaxation</p>
                     <div class="service-duration">75 min</div>
-                    <button class="btn-book" onclick="handleBookService('Hot Stone')">Book Now</button>
+                    <button class="btn-book" onclick="showSection('booking')">Book Now</button>
                 </div>
                 <div class="service-card">
                     <div class="service-image" style="background: linear-gradient(135deg, #E8C4D5 0%, #D4B0C4 100%);">
@@ -300,7 +122,7 @@
                     <h3>Aromatherapy</h3>
                     <p>Essential oils enhance your massage experience</p>
                     <div class="service-duration">60 min</div>
-                    <button class="btn-book" onclick="handleBookService('Aromatherapy')">Book Now</button>
+                    <button class="btn-book" onclick="showSection('booking')">Book Now</button>
                 </div>
                 <div class="service-card">
                     <div class="service-image" style="background: linear-gradient(135deg, #C4E8D5 0%, #B0D4C4 100%);">
@@ -309,7 +131,7 @@
                     <h3>Sports Massage</h3>
                     <p>Designed for athletes and active lifestyles</p>
                     <div class="service-duration">60 min</div>
-                    <button class="btn-book" onclick="handleBookService('Sports Massage')">Book Now</button>
+                    <button class="btn-book" onclick="showSection('booking')">Book Now</button>
                 </div>
                 <div class="service-card">
                     <div class="service-image" style="background: linear-gradient(135deg, #D5C4E8 0%, #C4B0D4 100%);">
@@ -318,7 +140,7 @@
                     <h3>Thai Massage</h3>
                     <p>Traditional stretching and acupressure</p>
                     <div class="service-duration">90 min</div>
-                    <button class="btn-book" onclick="handleBookService('Thai Massage')">Book Now</button>
+                    <button class="btn-book" onclick="showSection('booking')">Book Now</button>
                 </div>
             </div>
         </section>
@@ -326,6 +148,7 @@
         <!-- Masseuse Profiles Section -->
         <section class="masseuse-section">
             <h2 class="section-title">Meet Our Therapists</h2>
+            <p class="section-subtitle">Expert professionals ready to come to you</p>
             <div class="masseuse-grid" id="masseuseGrid">
                 <div class="masseuse-card">
                     <div class="masseuse-photo" style="background: linear-gradient(135deg, #E8D5C4 0%, #D4C4B0 100%);">
@@ -390,36 +213,29 @@
             <div class="reviews-container" id="reviewsContainer">
                 <div class="review-card active">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">"Absolutely amazing experience! Sarah's Swedish massage was exactly what I needed after a stressful week. The atmosphere is so calming and professional."</p>
-                    <div class="review-author">- Jennifer M.</div>
+                    <p class="review-text">"Perfect for exam stress! Sarah came to my dorm and gave me the most relaxing Swedish massage. I felt so much better and could focus on studying. Highly recommend for students!"</p>
+                    <div class="review-author">- Jennifer M., Student</div>
                 </div>
                 <div class="review-card">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">"Michael's deep tissue massage worked wonders on my back pain. I've been coming here for months and always leave feeling renewed."</p>
-                    <div class="review-author">- Robert T.</div>
+                    <p class="review-text">"Michael's deep tissue massage at my office was incredible! No need to leave work - he set up everything and I was back to work feeling refreshed. Game changer!"</p>
+                    <div class="review-author">- Robert T., Professional</div>
                 </div>
                 <div class="review-card">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">"The hot stone massage with Emma was incredible! Best massage I've ever had. The whole experience was luxurious and relaxing."</p>
-                    <div class="review-author">- Maria L.</div>
+                    <p class="review-text">"Emma's hot stone massage in my living room was pure luxury. The convenience of having a spa experience at home is unmatched. Will definitely book again!"</p>
+                    <div class="review-author">- Maria L., Home Office</div>
                 </div>
                 <div class="review-card">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">"I love the aromatherapy sessions here. The scents are perfectly chosen and the therapists are all so skilled and friendly."</p>
-                    <div class="review-author">- David K.</div>
+                    <p class="review-text">"As a busy professional, I love that they come to me. The aromatherapy session helped me unwind after a stressful week. David is professional and amazing!"</p>
+                    <div class="review-author">- David K., Executive</div>
                 </div>
                 <div class="review-card">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
-                    <p class="review-text">"As an athlete, the sports massage from James has been a game-changer for my recovery. Highly recommend to anyone active!"</p>
-                    <div class="review-author">- Amanda S.</div>
+                    <p class="review-text">"Perfect during finals week! Lisa came to our study group's apartment and gave us all massages. It was exactly what we needed to de-stress. Thank you!"</p>
+                    <div class="review-author">- Amanda S., Graduate Student</div>
                 </div>
-            </div>
-            <div class="reviews-pagination">
-                <span class="review-dot active" onclick="goToReview(0)"></span>
-                <span class="review-dot" onclick="goToReview(1)"></span>
-                <span class="review-dot" onclick="goToReview(2)"></span>
-                <span class="review-dot" onclick="goToReview(3)"></span>
-                <span class="review-dot" onclick="goToReview(4)"></span>
             </div>
         </section>
 
@@ -427,10 +243,308 @@
         <section class="cta-section">
             <div class="cta-content">
                 <h2>Ready to Experience Serenity?</h2>
-                <p>Book your appointment today and start your wellness journey</p>
-                <button class="btn-primary btn-large" onclick="handleBookService('General Booking')">Book Appointment</button>
+                <p>Book your at-home massage today and transform your space into a spa</p>
+                <button class="btn-primary btn-large" onclick="showSection('booking')">Book Appointment</button>
             </div>
         </section>
+    </section>
+
+    <!-- Booking Page -->
+    <section id="booking" class="section">
+        <header class="booking-header">
+            <div class="header-content">
+                <button class="back-button" onclick="showSection('guest-home')">← Back to Home</button>
+                <h1 class="header-logo">Serenity Spa</h1>
+                <div class="header-actions">
+                    <button class="btn-login-header" onclick="showSection('login')">Login</button>
+                    <button class="btn-signup-header" onclick="showSection('signup')">Sign Up</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="booking-container">
+            <h2 class="booking-title">Book Your Appointment</h2>
+            <p class="booking-subtitle">Select a therapist, service, date, and time</p>
+
+            <!-- Step Indicator -->
+            <div class="booking-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Therapist</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Service</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Date & Time</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Confirm</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Select Therapist -->
+            <div class="booking-step-content active" id="step1">
+                <h3>Choose Your Therapist</h3>
+                <div class="therapist-selection-grid">
+                    <div class="therapist-select-card" onclick="selectTherapist('sarah')">
+                        <div class="therapist-select-photo" style="background: linear-gradient(135deg, #E8D5C4 0%, #D4C4B0 100%);">
+                            <div class="photo-placeholder">👩</div>
+                        </div>
+                        <h4>Sarah Johnson</h4>
+                        <p>Swedish & Aromatherapy</p>
+                        <div class="therapist-rating">⭐⭐⭐⭐⭐ 4.9</div>
+                    </div>
+                    <div class="therapist-select-card" onclick="selectTherapist('michael')">
+                        <div class="therapist-select-photo" style="background: linear-gradient(135deg, #C4D5E8 0%, #B0C4D4 100%);">
+                            <div class="photo-placeholder">👨</div>
+                        </div>
+                        <h4>Michael Chen</h4>
+                        <p>Deep Tissue & Sports</p>
+                        <div class="therapist-rating">⭐⭐⭐⭐⭐ 5.0</div>
+                    </div>
+                    <div class="therapist-select-card" onclick="selectTherapist('emma')">
+                        <div class="therapist-select-photo" style="background: linear-gradient(135deg, #D5E8C4 0%, #C4D4B0 100%);">
+                            <div class="photo-placeholder">👩</div>
+                        </div>
+                        <h4>Emma Rodriguez</h4>
+                        <p>Hot Stone & Thai</p>
+                        <div class="therapist-rating">⭐⭐⭐⭐⭐ 4.8</div>
+                    </div>
+                    <div class="therapist-select-card" onclick="selectTherapist('david')">
+                        <div class="therapist-select-photo" style="background: linear-gradient(135deg, #E8C4D5 0%, #D4B0C4 100%);">
+                            <div class="photo-placeholder">👨</div>
+                        </div>
+                        <h4>David Kim</h4>
+                        <p>Swedish & Relaxation</p>
+                        <div class="therapist-rating">⭐⭐⭐⭐⭐ 4.9</div>
+                    </div>
+                    <div class="therapist-select-card" onclick="selectTherapist('lisa')">
+                        <div class="therapist-select-photo" style="background: linear-gradient(135deg, #C4E8D5 0%, #B0D4C4 100%);">
+                            <div class="photo-placeholder">👩</div>
+                        </div>
+                        <h4>Lisa Anderson</h4>
+                        <p>Aromatherapy & Prenatal</p>
+                        <div class="therapist-rating">⭐⭐⭐⭐⭐ 4.7</div>
+                    </div>
+                    <div class="therapist-select-card" onclick="selectTherapist('james')">
+                        <div class="therapist-select-photo" style="background: linear-gradient(135deg, #D5C4E8 0%, #C4B0D4 100%);">
+                            <div class="photo-placeholder">👨</div>
+                        </div>
+                        <h4>James Wilson</h4>
+                        <p>Sports & Deep Tissue</p>
+                        <div class="therapist-rating">⭐⭐⭐⭐⭐ 4.8</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Select Service -->
+            <div class="booking-step-content" id="step2">
+                <h3>Choose Your Service</h3>
+                <div class="service-selection-grid" id="serviceSelectionGrid">
+                    <!-- Services will be populated based on selected therapist -->
+                </div>
+            </div>
+
+            <!-- Step 3: Select Date & Time -->
+            <div class="booking-step-content" id="step3">
+                <h3>Select Date & Time</h3>
+                <div class="date-time-container">
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button class="calendar-nav" onclick="changeMonth(-1)">←</button>
+                            <h4 id="calendarMonth"></h4>
+                            <button class="calendar-nav" onclick="changeMonth(1)">→</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="time-slots-container">
+                        <h4>Available Times</h4>
+                        <div class="time-slots-grid" id="timeSlotsGrid">
+                            <!-- Time slots will be populated based on selected date and service -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Confirm Booking -->
+            <div class="booking-step-content" id="step4">
+                <h3>Confirm Your Booking</h3>
+                <div class="booking-summary" id="bookingSummary">
+                    <!-- Summary will be populated -->
+                </div>
+                <div class="booking-form">
+                    <h4>Your Details</h4>
+                    <div class="form-group">
+                        <label for="bookingName">Full Name</label>
+                        <input type="text" id="bookingName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingEmail">Email</label>
+                        <input type="email" id="bookingEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingPhone">Phone Number</label>
+                        <input type="tel" id="bookingPhone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingAddress">Service Address</label>
+                        <textarea id="bookingAddress" placeholder="Enter address where you'd like the massage (home, office, dorm, etc.)" rows="3" required></textarea>
+                    </div>
+                    <button class="btn-primary btn-full" onclick="confirmBooking()">Confirm Booking</button>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="booking-navigation">
+                <button class="btn-secondary" id="prevBtn" onclick="previousStep()" style="display: none;">Previous</button>
+                <button class="btn-primary" id="nextBtn" onclick="nextStep()" style="display: none;">Next</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Page -->
+    <section id="login" class="section">
+        <div class="form-container">
+            <button class="back-button" onclick="showSection('guest-home')">← Back</button>
+            <h2>Welcome Back</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email or Phone Number</label>
+                    <input type="text" id="loginEmail" placeholder="Enter email or phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" placeholder="Enter password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">👁️</button>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember Me</span>
+                    </label>
+                    <a href="#" class="forgot-password" onclick="alert('Password reset feature coming soon!'); return false;">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Login</button>
+            </form>
+            
+            <div class="social-login">
+                <p class="divider">Or continue with</p>
+                <div class="social-buttons">
+                    <button class="social-btn" onclick="alert('Google login coming soon!');">
+                        <span>🔵</span> Google
+                    </button>
+                    <button class="social-btn" onclick="alert('Facebook login coming soon!');">
+                        <span>🔵</span> Facebook
+                    </button>
+                    <button class="social-btn" onclick="alert('42 login coming soon!');">
+                        <span>🔵</span> 42
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sign Up Page -->
+    <section id="signup" class="section">
+        <div class="form-container">
+            <button class="back-button" onclick="showSection('guest-home')">← Back</button>
+            <h2>Create Account</h2>
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label>Sign up with</label>
+                    <div class="choice-buttons">
+                        <button type="button" class="choice-btn active" onclick="selectSignupMethod('email')">
+                            📧 Email
+                        </button>
+                        <button type="button" class="choice-btn" onclick="selectSignupMethod('phone')">
+                            📱 Phone
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group" id="emailGroup">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group hidden" id="phoneGroup">
+                    <label for="signupPhone">Phone Number</label>
+                    <input type="tel" id="signupPhone" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="acceptTerms" required>
+                        <span>I accept the Terms & Conditions</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Continue</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- OTP Verification Page -->
+    <section id="otp" class="section">
+        <div class="form-container">
+            <button class="back-button" onclick="showSection('signup')">← Back</button>
+            <h2>Verify Your Account</h2>
+            <p class="otp-subtitle">Enter the verification code sent to <span id="otpTarget"></span></p>
+            <form id="otpForm" onsubmit="handleOTP(event)">
+                <div class="otp-container">
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                </div>
+                <div class="otp-timer">
+                    <p>Resend code in <span id="timer">30</span>s</p>
+                </div>
+                <button type="button" class="btn-link" id="resendBtn" onclick="resendOTP()" disabled>Resend OTP</button>
+                <button type="submit" class="btn-primary btn-full">Verify</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Profile Setup Page -->
+    <section id="profile" class="section">
+        <div class="form-container">
+            <button class="back-button" onclick="showSection('otp')">← Back</button>
+            <h2>Complete Your Profile</h2>
+            <p class="profile-subtitle">Help us personalize your experience</p>
+            <form id="profileForm" onsubmit="handleProfile(event)">
+                <div class="form-group">
+                    <label for="profileName">Full Name</label>
+                    <input type="text" id="profileName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileAge">Age</label>
+                    <input type="number" id="profileAge" placeholder="Enter your age" min="18" max="120" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileEmail">Email</label>
+                    <input type="email" id="profileEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="profilePhone">Phone Number</label>
+                    <input type="tel" id="profilePhone" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileAddress">Address</label>
+                    <textarea id="profileAddress" placeholder="Enter your address" rows="3" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="skipProfile()">Skip</button>
+                    <button type="submit" class="btn-primary">Complete Setup</button>
+                </div>
+            </form>
+        </div>
     </section>
 
     <script src="script.js"></script>
