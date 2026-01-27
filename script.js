@@ -1,74 +1,506 @@
 // Section Navigation
 function showSection(sectionId) {
-    // Hide all sections
     document.querySelectorAll('.section').forEach(section => {
         section.classList.remove('active');
     });
     
-    // Show target section
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
         targetSection.classList.add('active');
         window.scrollTo(0, 0);
+        
+        // Initialize section-specific features
+        if (sectionId === 'guest-home') {
+            initializeHomePage();
+        } else if (sectionId === 'booking') {
+            initializeBooking();
+        }
     }
 }
 
-// Carousel Functionality
-let currentSlide = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-const totalSlides = slides.length;
-
-function goToSlide(index) {
-    // Remove active class from all slides and dots
-    slides.forEach(slide => slide.classList.remove('active'));
-    document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
-    
-    // Add active class to selected slide and dot
-    slides[index].classList.add('active');
-    document.querySelectorAll('.dot')[index].classList.add('active');
-    currentSlide = index;
+// Home Page Initialization
+function initializeHomePage() {
+    initializeReviews();
+    // Discount scroll is handled by CSS animation
 }
 
-// Auto-advance carousel (optional)
-function autoAdvanceCarousel() {
-    setInterval(() => {
-        if (document.getElementById('onboarding').classList.contains('active')) {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            goToSlide(currentSlide);
+// Reviews Auto-Scroll (Smooth Infinite Loop)
+let currentReview = 0;
+let reviewInterval;
+const reviews = document.querySelectorAll('.review-card');
+const totalReviews = reviews.length;
+
+function initializeReviews() {
+    if (reviews.length === 0) return;
+    
+    // Reset to first review
+    goToReview(0);
+    
+    // Clear any existing interval
+    if (reviewInterval) {
+        clearInterval(reviewInterval);
+    }
+    
+    // Start auto-advance
+    reviewInterval = setInterval(() => {
+        if (document.getElementById('guest-home').classList.contains('active')) {
+            currentReview = (currentReview + 1) % totalReviews;
+            goToReview(currentReview);
         }
     }, 5000);
 }
 
-// Initialize carousel auto-advance
-autoAdvanceCarousel();
+function goToReview(index) {
+    reviews.forEach((review, i) => {
+        review.classList.remove('active', 'prev');
+        if (i === index) {
+            review.classList.add('active');
+        } else if (i === (index - 1 + totalReviews) % totalReviews) {
+            review.classList.add('prev');
+        }
+    });
+    currentReview = index;
+}
 
-// Password Toggle
-function togglePassword(inputId) {
-    const input = document.getElementById(inputId);
-    const button = input.nextElementSibling;
+// Booking System
+let bookingData = {
+    therapist: null,
+    service: null,
+    date: null,
+    time: null
+};
+
+let currentStep = 1;
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+
+// Therapist Data with Services and Availability
+const therapistData = {
+    sarah: {
+        name: 'Sarah Johnson',
+        services: [
+            { id: 'swedish', name: 'Swedish Massage', duration: 60, price: 100 },
+            { id: 'aromatherapy', name: 'Aromatherapy', duration: 60, price: 130 }
+        ],
+        availableDays: [1, 2, 3, 4, 5], // Monday to Friday
+        availableTimes: ['09:00', '11:00', '14:00', '16:00', '18:00']
+    },
+    michael: {
+        name: 'Michael Chen',
+        services: [
+            { id: 'deep-tissue', name: 'Deep Tissue', duration: 90, price: 120 },
+            { id: 'sports', name: 'Sports Massage', duration: 60, price: 112 }
+        ],
+        availableDays: [1, 2, 3, 4, 5, 6], // Monday to Saturday
+        availableTimes: ['10:00', '12:00', '15:00', '17:00', '19:00']
+    },
+    emma: {
+        name: 'Emma Rodriguez',
+        services: [
+            { id: 'hot-stone', name: 'Hot Stone', duration: 75, price: 125 },
+            { id: 'thai', name: 'Thai Massage', duration: 90, price: 140 }
+        ],
+        availableDays: [0, 1, 2, 3, 4, 5, 6], // All days
+        availableTimes: ['09:00', '11:00', '13:00', '15:00', '17:00', '19:00']
+    },
+    david: {
+        name: 'David Kim',
+        services: [
+            { id: 'swedish', name: 'Swedish Massage', duration: 60, price: 100 },
+            { id: 'relaxation', name: 'Relaxation Therapy', duration: 60, price: 110 }
+        ],
+        availableDays: [1, 2, 3, 4, 5], // Monday to Friday
+        availableTimes: ['10:00', '12:00', '14:00', '16:00', '18:00']
+    },
+    lisa: {
+        name: 'Lisa Anderson',
+        services: [
+            { id: 'aromatherapy', name: 'Aromatherapy', duration: 60, price: 130 },
+            { id: 'prenatal', name: 'Prenatal Massage', duration: 75, price: 135 }
+        ],
+        availableDays: [1, 2, 3, 4, 5], // Monday to Friday
+        availableTimes: ['09:00', '11:00', '14:00', '16:00']
+    },
+    james: {
+        name: 'James Wilson',
+        services: [
+            { id: 'sports', name: 'Sports Massage', duration: 60, price: 112 },
+            { id: 'deep-tissue', name: 'Deep Tissue', duration: 90, price: 120 }
+        ],
+        availableDays: [1, 2, 3, 4, 5, 6], // Monday to Saturday
+        availableTimes: ['10:00', '12:00', '15:00', '17:00', '19:00']
+    }
+};
+
+function initializeBooking() {
+    currentStep = 1;
+    bookingData = { therapist: null, service: null, date: null, time: null };
+    updateBookingSteps();
+    showBookingStep(1);
+}
+
+function selectTherapist(therapistId) {
+    bookingData.therapist = therapistId;
     
-    if (input.type === 'password') {
-        input.type = 'text';
-        button.textContent = '🙈';
+    // Update UI
+    document.querySelectorAll('.therapist-select-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    
+    // Show services for this therapist
+    showServicesForTherapist(therapistId);
+    
+    // Move to next step
+    setTimeout(() => {
+        nextStep();
+    }, 300);
+}
+
+function showServicesForTherapist(therapistId) {
+    const therapist = therapistData[therapistId];
+    const serviceGrid = document.getElementById('serviceSelectionGrid');
+    
+    if (!therapist || !serviceGrid) return;
+    
+    serviceGrid.innerHTML = therapist.services.map(service => `
+        <div class="service-select-card" onclick="selectService('${service.id}', '${therapistId}')">
+            <h4>${service.name}</h4>
+            <p>Professional ${service.name.toLowerCase()} therapy</p>
+            <div class="service-select-info">
+                <span class="service-select-duration">${service.duration} min</span>
+                <span class="service-select-price">$${service.price}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function selectService(serviceId, therapistId) {
+    const therapist = therapistData[therapistId];
+    const service = therapist.services.find(s => s.id === serviceId);
+    
+    bookingData.service = serviceId;
+    bookingData.serviceData = service;
+    
+    // Update UI
+    document.querySelectorAll('.service-select-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    
+    // Move to next step
+    setTimeout(() => {
+        nextStep();
+    }, 300);
+}
+
+function showBookingStep(step) {
+    document.querySelectorAll('.booking-step-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    const stepContent = document.getElementById(`step${step}`);
+    if (stepContent) {
+        stepContent.classList.add('active');
+    }
+    
+    // Show/hide navigation buttons
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (step === 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+    } else if (step === 4) {
+        prevBtn.style.display = 'block';
+        nextBtn.style.display = 'none';
+        updateBookingSummary();
     } else {
-        input.type = 'password';
-        button.textContent = '👁️';
+        prevBtn.style.display = 'block';
+        nextBtn.style.display = 'block';
+    }
+    
+    // Initialize step-specific content
+    if (step === 3) {
+        generateCalendar();
+        updateTimeSlots();
     }
 }
 
-// Sign Up Method Selection
+function updateBookingSteps() {
+    document.querySelectorAll('.step').forEach((step, index) => {
+        const stepNum = index + 1;
+        if (stepNum < currentStep) {
+            step.classList.add('completed');
+            step.classList.remove('active');
+        } else if (stepNum === currentStep) {
+            step.classList.add('active');
+            step.classList.remove('completed');
+        } else {
+            step.classList.remove('active', 'completed');
+        }
+    });
+}
+
+function nextStep() {
+    if (currentStep < 4) {
+        currentStep++;
+        updateBookingSteps();
+        showBookingStep(currentStep);
+    }
+}
+
+function previousStep() {
+    if (currentStep > 1) {
+        currentStep--;
+        updateBookingSteps();
+        showBookingStep(currentStep);
+    }
+}
+
+// Calendar Functions
+function generateCalendar() {
+    const calendarGrid = document.getElementById('calendarGrid');
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    document.getElementById('calendarMonth').textContent = 
+        `${monthNames[currentMonth]} ${currentYear}`;
+    
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const today = new Date();
+    const isCurrentMonth = today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+    
+    let html = '<div class="calendar-day-header">Sun</div>';
+    html += '<div class="calendar-day-header">Mon</div>';
+    html += '<div class="calendar-day-header">Tue</div>';
+    html += '<div class="calendar-day-header">Wed</div>';
+    html += '<div class="calendar-day-header">Thu</div>';
+    html += '<div class="calendar-day-header">Fri</div>';
+    html += '<div class="calendar-day-header">Sat</div>';
+    
+    // Empty cells for days before month starts
+    for (let i = 0; i < firstDay; i++) {
+        html += '<div class="calendar-day"></div>';
+    }
+    
+    // Days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(currentYear, currentMonth, day);
+        const dayOfWeek = date.getDay();
+        const isPast = date < today && !(isCurrentMonth && day === today.getDate());
+        const isAvailable = bookingData.therapist && 
+            therapistData[bookingData.therapist].availableDays.includes(dayOfWeek);
+        
+        let classes = 'calendar-day';
+        if (isPast) {
+            classes += ' disabled';
+        } else if (isCurrentMonth && day === today.getDate()) {
+            classes += ' today';
+        }
+        if (bookingData.date && bookingData.date === `${currentYear}-${currentMonth}-${day}`) {
+            classes += ' selected';
+        }
+        
+        html += `<div class="${classes}" onclick="selectDate(${day}, ${currentMonth}, ${currentYear})" 
+            ${isPast || !isAvailable ? 'style="opacity: 0.3; cursor: not-allowed;"' : ''}>
+            ${day}
+        </div>`;
+    }
+    
+    calendarGrid.innerHTML = html;
+}
+
+function changeMonth(direction) {
+    currentMonth += direction;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    generateCalendar();
+    updateTimeSlots();
+}
+
+function selectDate(day, month, year) {
+    const date = new Date(year, month, day);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (date < today) return;
+    
+    if (!bookingData.therapist) return;
+    
+    const therapist = therapistData[bookingData.therapist];
+    const dayOfWeek = date.getDay();
+    
+    if (!therapist.availableDays.includes(dayOfWeek)) return;
+    
+    bookingData.date = `${year}-${month}-${day}`;
+    bookingData.dateObj = date;
+    
+    generateCalendar();
+    updateTimeSlots();
+}
+
+function updateTimeSlots() {
+    const timeSlotsGrid = document.getElementById('timeSlotsGrid');
+    if (!timeSlotsGrid) return;
+    
+    if (!bookingData.therapist || !bookingData.date) {
+        timeSlotsGrid.innerHTML = '<p style="text-align: center; color: var(--color-text-light);">Please select a date first</p>';
+        return;
+    }
+    
+    const therapist = therapistData[bookingData.therapist];
+    const selectedDate = bookingData.dateObj || new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const isToday = selectedDate.getTime() === today.getTime();
+    const currentHour = new Date().getHours();
+    
+    const availableTimes = therapist.availableTimes.filter(time => {
+        if (isToday) {
+            const timeHour = parseInt(time.split(':')[0]);
+            return timeHour > currentHour;
+        }
+        return true;
+    });
+    
+    if (availableTimes.length === 0) {
+        timeSlotsGrid.innerHTML = '<p style="text-align: center; color: var(--color-text-light);">No available times for this date</p>';
+        return;
+    }
+    
+    timeSlotsGrid.innerHTML = availableTimes.map(time => {
+        const isSelected = bookingData.time === time;
+        return `<div class="time-slot ${isSelected ? 'selected' : ''}" 
+            onclick="selectTime('${time}')">${time}</div>`;
+    }).join('');
+}
+
+function selectTime(time) {
+    bookingData.time = time;
+    updateTimeSlots();
+    
+    // Auto-advance to confirmation after a short delay
+    setTimeout(() => {
+        if (bookingData.date && bookingData.time) {
+            nextStep();
+        }
+    }, 500);
+}
+
+function updateBookingSummary() {
+    const summary = document.getElementById('bookingSummary');
+    if (!summary) return;
+    
+    const therapist = therapistData[bookingData.therapist];
+    const service = bookingData.serviceData;
+    const date = bookingData.dateObj || new Date();
+    const dateStr = date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    });
+    
+    summary.innerHTML = `
+        <h4>Booking Summary</h4>
+        <div class="summary-item">
+            <span class="summary-label">Therapist:</span>
+            <span class="summary-value">${therapist.name}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Service:</span>
+            <span class="summary-value">${service.name}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Duration:</span>
+            <span class="summary-value">${service.duration} minutes</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Date:</span>
+            <span class="summary-value">${dateStr}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-label">Time:</span>
+            <span class="summary-value">${bookingData.time}</span>
+        </div>
+        <div class="summary-item summary-total">
+            <span class="summary-label">Total:</span>
+            <span class="summary-value">$${service.price}</span>
+        </div>
+    `;
+}
+
+function confirmBooking() {
+    const name = document.getElementById('bookingName').value;
+    const email = document.getElementById('bookingEmail').value;
+    const phone = document.getElementById('bookingPhone').value;
+    const address = document.getElementById('bookingAddress').value;
+    
+    if (!name || !email || !phone || !address) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
+    const bookingInfo = {
+        ...bookingData,
+        customer: { name, email, phone, address }
+    };
+    
+    console.log('Booking confirmed:', bookingInfo);
+    
+    alert(`Booking confirmed!\n\n${therapistData[bookingData.therapist].name} will arrive at ${bookingData.time} on ${bookingData.dateObj.toLocaleDateString()}.\n\nA confirmation email has been sent to ${email}.\n\nThank you for choosing Serenity Spa!`);
+    
+    // Reset and go back to home
+    showSection('guest-home');
+}
+
+// Login/Signup Functions
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    console.log('Login attempt:', { email });
+    alert('Login successful! (This is a demo)');
+    showSection('guest-home');
+}
+
+function handleSignup(event) {
+    event.preventDefault();
+    const email = document.getElementById('signupEmail').value;
+    const phone = document.getElementById('signupPhone').value;
+    const acceptTerms = document.getElementById('acceptTerms').checked;
+    
+    if (!acceptTerms) {
+        alert('Please accept the Terms & Conditions');
+        return;
+    }
+    
+    const target = selectedSignupMethod === 'email' ? email : phone;
+    sessionStorage.setItem('signupTarget', target);
+    sessionStorage.setItem('signupMethod', selectedSignupMethod);
+    
+    showSection('otp');
+    initializeOTP();
+}
+
 let selectedSignupMethod = 'email';
 
 function selectSignupMethod(method) {
     selectedSignupMethod = method;
     
-    // Update button states
     document.querySelectorAll('.choice-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     event.target.classList.add('active');
     
-    // Show/hide input groups
     const emailGroup = document.getElementById('emailGroup');
     const phoneGroup = document.getElementById('phoneGroup');
     const emailInput = document.getElementById('signupEmail');
@@ -89,58 +521,27 @@ function selectSignupMethod(method) {
     }
 }
 
-// Handle Sign Up
-function handleSignup(event) {
-    event.preventDefault();
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const button = input.nextElementSibling;
     
-    const email = document.getElementById('signupEmail').value;
-    const phone = document.getElementById('signupPhone').value;
-    const acceptTerms = document.getElementById('acceptTerms').checked;
-    
-    if (!acceptTerms) {
-        alert('Please accept the Terms & Conditions to continue.');
-        return;
+    if (input.type === 'password') {
+        input.type = 'text';
+        button.textContent = '🙈';
+    } else {
+        input.type = 'password';
+        button.textContent = '👁️';
     }
-    
-    // Store signup method for OTP page
-    const target = selectedSignupMethod === 'email' ? email : phone;
-    sessionStorage.setItem('signupTarget', target);
-    sessionStorage.setItem('signupMethod', selectedSignupMethod);
-    
-    // Show OTP page
-    showSection('otp');
-    initializeOTP();
 }
 
-// Handle Login
-function handleLogin(event) {
-    event.preventDefault();
-    
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-    const rememberMe = document.getElementById('rememberMe').checked;
-    
-    // Simulate login (no backend)
-    console.log('Login attempt:', { email, password, rememberMe });
-    
-    // In a real app, this would make an API call
-    alert('Login successful! (This is a demo - no actual authentication)');
-    
-    // You could redirect to a dashboard here
-    // showSection('dashboard');
-}
-
-// OTP Functionality
+// OTP Functions
 let otpTimer;
 let otpTimeLeft = 30;
 
 function initializeOTP() {
-    // Set target display
     const target = sessionStorage.getItem('signupTarget');
-    const method = sessionStorage.getItem('signupMethod');
     document.getElementById('otpTarget').textContent = target || 'your device';
     
-    // Reset OTP inputs
     const otpInputs = document.querySelectorAll('.otp-input');
     otpInputs.forEach(input => {
         input.value = '';
@@ -148,10 +549,8 @@ function initializeOTP() {
         input.addEventListener('keydown', handleOTPKeydown);
     });
     
-    // Focus first input
     otpInputs[0].focus();
     
-    // Reset and start timer
     otpTimeLeft = 30;
     document.getElementById('timer').textContent = otpTimeLeft;
     document.getElementById('resendBtn').disabled = true;
@@ -172,7 +571,6 @@ function handleOTPInput(event) {
 
 function handleOTPKeydown(event) {
     const input = event.target;
-    
     if (event.key === 'Backspace' && !input.value && input.previousElementSibling) {
         input.previousElementSibling.focus();
     }
@@ -189,27 +587,19 @@ function updateOTPTimer() {
 }
 
 function resendOTP() {
-    // Reset timer
     otpTimeLeft = 30;
     document.getElementById('timer').textContent = otpTimeLeft;
     document.getElementById('resendBtn').disabled = true;
     
-    // Clear OTP inputs
     document.querySelectorAll('.otp-input').forEach(input => {
         input.value = '';
     });
     document.querySelectorAll('.otp-input')[0].focus();
     
-    // Restart timer
     clearInterval(otpTimer);
     otpTimer = setInterval(updateOTPTimer, 1000);
     
-    alert('OTP resent! (This is a demo - check console for simulated code)');
-    console.log('Simulated OTP:', generateSimulatedOTP());
-}
-
-function generateSimulatedOTP() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
+    alert('OTP resent!');
 }
 
 function handleOTP(event) {
@@ -217,24 +607,18 @@ function handleOTP(event) {
     
     const otpInputs = document.querySelectorAll('.otp-input');
     let otpValue = '';
-    
     otpInputs.forEach(input => {
         otpValue += input.value;
     });
     
     if (otpValue.length !== 6) {
-        alert('Please enter the complete 6-digit OTP code.');
+        alert('Please enter the complete 6-digit OTP code');
         return;
     }
     
-    // Simulate OTP verification (accepts any 6 digits in demo)
-    console.log('OTP entered:', otpValue);
-    
-    // Show success and move to profile
     alert('OTP verified successfully!');
     showSection('profile');
     
-    // Pre-fill email/phone in profile if available
     const target = sessionStorage.getItem('signupTarget');
     const method = sessionStorage.getItem('signupMethod');
     
@@ -245,7 +629,6 @@ function handleOTP(event) {
     }
 }
 
-// Handle Profile Setup
 function handleProfile(event) {
     event.preventDefault();
     
@@ -255,114 +638,21 @@ function handleProfile(event) {
     const phone = document.getElementById('profilePhone').value;
     const address = document.getElementById('profileAddress').value;
     
-    // Store profile data (in real app, send to backend)
-    const profileData = { name, age, email, phone, address };
-    console.log('Profile data:', profileData);
-    
+    console.log('Profile data:', { name, age, email, phone, address });
     alert('Profile setup complete! Welcome to Serenity Spa!');
-    
-    // In a real app, redirect to dashboard/home
-    // For demo, you could show a success page or redirect to landing
-    showSection('landing');
+    showSection('guest-home');
 }
 
 function skipProfile() {
     if (confirm('Are you sure you want to skip profile setup? You can complete it later.')) {
         alert('Welcome to Serenity Spa!');
-        showSection('landing');
+        showSection('guest-home');
     }
 }
-// ... existing code ...
 
-// Guest Home Functions
-function handleBookService(serviceName) {
-    alert(`Booking ${serviceName}...\n\nIn a real app, this would open a booking calendar.\n\nFor now, please sign up or login to complete your booking!`);
-    console.log('Booking service:', serviceName);
-}
-
-// Reviews Auto-Scroll
-let currentReview = 0;
-const reviews = document.querySelectorAll('.review-card');
-const totalReviews = reviews.length;
-let reviewInterval;
-
-function goToReview(index) {
-    reviews.forEach(review => review.classList.remove('active'));
-    document.querySelectorAll('.review-dot').forEach(dot => dot.classList.remove('active'));
-    
-    reviews[index].classList.add('active');
-    document.querySelectorAll('.review-dot')[index].classList.add('active');
-    currentReview = index;
-}
-
-function autoAdvanceReviews() {
-    reviewInterval = setInterval(() => {
-        if (document.getElementById('guest-home').classList.contains('active')) {
-            currentReview = (currentReview + 1) % totalReviews;
-            goToReview(currentReview);
-        }
-    }, 5000);
-}
-
-// Discount Scroll Animation
-function animateDiscountScroll() {
-    const discountScroll = document.getElementById('discountScroll');
-    if (!discountScroll) return;
-    
-    let scrollPosition = 0;
-    const scrollSpeed = 1;
-    
-    function scroll() {
-        if (document.getElementById('guest-home').classList.contains('active')) {
-            scrollPosition += scrollSpeed;
-            discountScroll.scrollLeft = scrollPosition;
-            
-            // Reset scroll when reaching the end
-            if (scrollPosition >= discountScroll.scrollWidth - discountScroll.clientWidth) {
-                scrollPosition = 0;
-            }
-        }
-    }
-    
-    // Smooth auto-scroll (slower, more subtle)
-    setInterval(scroll, 50);
-}
-
-// Initialize guest home features when section is shown
-const originalShowSection = showSection;
-showSection = function(sectionId) {
-    originalShowSection(sectionId);
-    
-    if (sectionId === 'guest-home') {
-        // Initialize reviews
-        setTimeout(() => {
-            goToReview(0);
-            autoAdvanceReviews();
-        }, 100);
-        
-        // Initialize discount scroll
-        setTimeout(() => {
-            animateDiscountScroll();
-        }, 100);
-    } else {
-        // Clear intervals when leaving guest home
-        if (reviewInterval) {
-            clearInterval(reviewInterval);
-        }
-    }
-};
-
-// ... rest of existing code ...
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Show landing page by default
-    showSection('landing');
-    
-    // Add smooth scroll behavior
+    showSection('guest-home');
     document.documentElement.style.scrollBehavior = 'smooth';
-    
-    // Debug helper - log current section
-    console.log('Wellness Website Loaded');
-    console.log('Available sections: landing, onboarding, login, signup, otp, profile');
-    console.log('Use showSection("sectionName") to navigate');
+    console.log('Serenity Spa Website Loaded');
 });
