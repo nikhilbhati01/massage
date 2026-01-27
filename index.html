@@ -211,27 +211,27 @@
         <section class="reviews-section">
             <h2 class="section-title">What Our Customers Say</h2>
             <div class="reviews-container" id="reviewsContainer">
-                <div class="review-card active">
+                <div class="review-card active" data-review="0">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
                     <p class="review-text">"Perfect for exam stress! Sarah came to my dorm and gave me the most relaxing Swedish massage. I felt so much better and could focus on studying. Highly recommend for students!"</p>
                     <div class="review-author">- Jennifer M., Student</div>
                 </div>
-                <div class="review-card">
+                <div class="review-card" data-review="1">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
                     <p class="review-text">"Michael's deep tissue massage at my office was incredible! No need to leave work - he set up everything and I was back to work feeling refreshed. Game changer!"</p>
                     <div class="review-author">- Robert T., Professional</div>
                 </div>
-                <div class="review-card">
+                <div class="review-card" data-review="2">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
                     <p class="review-text">"Emma's hot stone massage in my living room was pure luxury. The convenience of having a spa experience at home is unmatched. Will definitely book again!"</p>
                     <div class="review-author">- Maria L., Home Office</div>
                 </div>
-                <div class="review-card">
+                <div class="review-card" data-review="3">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
                     <p class="review-text">"As a busy professional, I love that they come to me. The aromatherapy session helped me unwind after a stressful week. David is professional and amazing!"</p>
                     <div class="review-author">- David K., Executive</div>
                 </div>
-                <div class="review-card">
+                <div class="review-card" data-review="4">
                     <div class="review-stars">⭐⭐⭐⭐⭐</div>
                     <p class="review-text">"Perfect during finals week! Lisa came to our study group's apartment and gave us all massages. It was exactly what we needed to de-stress. Thank you!"</p>
                     <div class="review-author">- Amanda S., Graduate Student</div>
@@ -430,7 +430,7 @@
                         <input type="checkbox" id="rememberMe">
                         <span>Remember Me</span>
                     </label>
-                    <a href="#" class="forgot-password" onclick="alert('Password reset feature coming soon!'); return false;">Forgot Password?</a>
+                    <a href="#" class="forgot-password" onclick="event.preventDefault(); alert('Password reset feature coming soon!');">Forgot Password?</a>
                 </div>
                 <button type="submit" class="btn-primary btn-full">Login</button>
             </form>
@@ -461,12 +461,8 @@
                 <div class="form-group">
                     <label>Sign up with</label>
                     <div class="choice-buttons">
-                        <button type="button" class="choice-btn active" onclick="selectSignupMethod('email')">
-                            📧 Email
-                        </button>
-                        <button type="button" class="choice-btn" onclick="selectSignupMethod('phone')">
-                            📱 Phone
-                        </button>
+                        <button type="button" class="choice-btn active" onclick="selectSignupMethod('email', event)">📧 Email</button>
+                        <button type="button" class="choice-btn" onclick="selectSignupMethod('phone', event)">📱 Phone</button>
                     </div>
                 </div>
                 <div class="form-group" id="emailGroup">
@@ -475,7 +471,7 @@
                 </div>
                 <div class="form-group hidden" id="phoneGroup">
                     <label for="signupPhone">Phone Number</label>
-                    <input type="tel" id="signupPhone" placeholder="Enter your phone number" required>
+                    <input type="tel" id="signupPhone" placeholder="Enter your phone number">
                 </div>
                 <div class="form-group">
                     <label class="checkbox-label">
