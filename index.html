@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness & Massage - Your Comfort Matters</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Landing / Splash Section -->
+    <section id="landing" class="section active">
+        <div class="landing-content">
+            <div class="logo">
+                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="35" fill="#A8C5A0" opacity="0.3"/>
+                    <path d="M40 20 L40 60 M20 40 L60 40" stroke="#7A9B73" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="40" cy="40" r="8" fill="#7A9B73"/>
+                </svg>
+            </div>
+            <h1 class="brand-name">Serenity Spa</h1>
+            <p class="tagline">Because your comfort matters</p>
+            <button class="scroll-indicator" onclick="showSection('onboarding')">
+                <span>↓</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Onboarding / Marketing Carousel -->
+    <section id="onboarding" class="section">
+        <div class="carousel-container">
+            <div class="carousel-slide active" data-slide="0">
+                <div class="slide-image" style="background: linear-gradient(135deg, #E8D5C4 0%, #D4C4B0 100%);">
+                    <div class="placeholder-image">💆</div>
+                </div>
+                <h2 class="slide-headline">Relax & Rejuvenate</h2>
+                <p class="slide-text">Experience the ultimate relaxation with our professional massage services</p>
+            </div>
+            <div class="carousel-slide" data-slide="1">
+                <div class="slide-image" style="background: linear-gradient(135deg, #C4D5E8 0%, #B0C4D4 100%);">
+                    <div class="placeholder-image">🌿</div>
+                </div>
+                <h2 class="slide-headline">Wellness That Matters</h2>
+                <p class="slide-text">Your health and comfort are our top priorities</p>
+            </div>
+            <div class="carousel-slide" data-slide="2">
+                <div class="slide-image" style="background: linear-gradient(135deg, #D5E8C4 0%, #C4D4B0 100%);">
+                    <div class="placeholder-image">✨</div>
+                </div>
+                <h2 class="slide-headline">Book Anytime</h2>
+                <p class="slide-text">Easy booking and flexible scheduling to fit your lifestyle</p>
+            </div>
+            <div class="carousel-slide" data-slide="3">
+                <div class="slide-image" style="background: linear-gradient(135deg, #E8C4D5 0%, #D4B0C4 100%);">
+                    <div class="placeholder-image">❤️</div>
+                </div>
+                <h2 class="slide-headline">Expert Therapists</h2>
+                <p class="slide-text">Trained professionals dedicated to your wellness journey</p>
+            </div>
+            
+            <div class="carousel-pagination">
+                <span class="dot active" onclick="goToSlide(0)"></span>
+                <span class="dot" onclick="goToSlide(1)"></span>
+                <span class="dot" onclick="goToSlide(2)"></span>
+                <span class="dot" onclick="goToSlide(3)"></span>
+            </div>
+            
+            <div class="carousel-buttons">
+                <button class="btn-secondary" onclick="showSection('login')">Login</button>
+                <button class="btn-primary" onclick="showSection('signup')">Sign Up</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Page -->
+    <section id="login" class="section">
+        <div class="form-container">
+            <button class="back-button" onclick="showSection('onboarding')">← Back</button>
+            <h2>Welcome Back</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email or Phone Number</label>
+                    <input type="text" id="loginEmail" placeholder="Enter email or phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" placeholder="Enter password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">👁️</button>
+                    </div>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember Me</span>
+                    </label>
+                    <a href="#" class="forgot-password" onclick="alert('Password reset feature coming soon!'); return false;">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Login</button>
+            </form>
+            
+            <div class="social-login">
+                <p class="divider">Or continue with</p>
+                <div class="social-buttons">
+                    <button class="social-btn" onclick="alert('Google login coming soon!');">
+                        <span>🔵</span> Google
+                    </button>
+                    <button class="social-btn" onclick="alert('Facebook login coming soon!');">
+                        <span>🔵</span> Facebook
+                    </button>
+                    <button class="social-btn" onclick="alert('42 login coming soon!');">
+                        <span>🔵</span> 42
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sign Up Page -->
+    <section id="signup" class="section">
+        <div class="form-container">
+            <button class="back-button" onclick="showSection('onboarding')">← Back</button>
+            <h2>Create Account</h2>
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label>Sign up with</label>
+                    <div class="choice-buttons">
+                        <button type="button" class="choice-btn active" onclick="selectSignupMethod('email')">
+                            📧 Email
+                        </button>
+                        <button type="button" class="choice-btn" onclick="selectSignupMethod('phone')">
+                            📱 Phone
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group" id="emailGroup">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group hidden" id="phoneGroup">
+                    <label for="signupPhone">Phone Number</label>
+                    <input type="tel" id="signupPhone" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="acceptTerms" required>
+                        <span>I accept the Terms & Conditions</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Continue</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- OTP Verification Page -->
+    <section id="otp" class="section">
+        <div class="form-container">
+            <button class="back-button" onclick="showSection('signup')">← Back</button>
+            <h2>Verify Your Account</h2>
+            <p class="otp-subtitle">Enter the verification code sent to <span id="otpTarget"></span></p>
+            <form id="otpForm" onsubmit="handleOTP(event)">
+                <div class="otp-container">
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                </div>
+                <div class="otp-timer">
+                    <p>Resend code in <span id="timer">30</span>s</p>
+                </div>
+                <button type="button" class="btn-link" id="resendBtn" onclick="resendOTP()" disabled>Resend OTP</button>
+                <button type="submit" class="btn-primary btn-full">Verify</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Profile Setup Page -->
+    <section id="profile" class="section">
+        <div class="form-container">
+            <button class="back-button" onclick="showSection('otp')">← Back</button>
+            <h2>Complete Your Profile</h2>
+            <p class="profile-subtitle">Help us personalize your experience</p>
+            <form id="profileForm" onsubmit="handleProfile(event)">
+                <div class="form-group">
+                    <label for="profileName">Full Name</label>
+                    <input type="text" id="profileName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileAge">Age</label>
+                    <input type="number" id="profileAge" placeholder="Enter your age" min="18" max="120" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileEmail">Email</label>
+                    <input type="email" id="profileEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="profilePhone">Phone Number</label>
+                    <input type="tel" id="profilePhone" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="profileAddress">Address</label>
+                    <textarea id="profileAddress" placeholder="Enter your address" rows="3" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="skipProfile()">Skip</button>
+                    <button type="submit" class="btn-primary">Complete Setup</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
