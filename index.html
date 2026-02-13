@@ -11,7 +11,7 @@
 </head>
 <body>
     <!-- Landing / Splash Section -->
-    <section id="landing" class="section active">
+    <section id="landing" class="section">
         <div class="landing-content">
             <div class="logo">
                 <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -217,7 +217,7 @@
     </section>
 
     <!-- Home / Main Page -->
-    <section id="home" class="section">
+    <section id="home" class="section active">
         <div class="home-container">
             <nav class="main-nav">
                 <div class="nav-brand">Serenity Spa</div>
@@ -226,25 +226,26 @@
                     <button class="nav-link" onclick="showSection('home')">Services</button>
                     <button class="nav-link" onclick="showSection('home')">Therapists</button>
                     <button class="nav-link btn-primary" onclick="showSection('booking')">Book Now</button>
+                    <button class="nav-link login-btn" onclick="showSection('login')">Login</button>
                 </div>
             </nav>
 
             <div class="home-content">
+                <!-- Special Offers Section - ON TOP -->
+                <section class="content-section">
+                    <h2 class="section-title">Special Offers</h2>
+                    <p class="section-subtitle">Limited time deals you don't want to miss</p>
+                    <div class="offers-grid" id="offersGrid">
+                        <!-- Offers will be dynamically generated -->
+                    </div>
+                </section>
+
                 <!-- Our Services Section -->
                 <section class="content-section">
                     <h2 class="section-title">Our Services</h2>
                     <p class="section-subtitle">Choose the perfect massage for your needs</p>
                     <div class="services-grid" id="servicesGrid">
                         <!-- Services will be dynamically generated -->
-                    </div>
-                </section>
-
-                <!-- Special Offers Section -->
-                <section class="content-section">
-                    <h2 class="section-title">Special Offers</h2>
-                    <p class="section-subtitle">Limited time deals you don't want to miss</p>
-                    <div class="offers-grid" id="offersGrid">
-                        <!-- Offers will be dynamically generated -->
                     </div>
                 </section>
 
@@ -256,14 +257,31 @@
                         <!-- Therapists will be dynamically generated -->
                     </div>
                 </section>
+            </div>
+        </div>
+    </section>
 
-                <!-- Filtered Results Section -->
-                <section class="content-section" id="filteredResults" style="display: none;">
-                    <h2 class="section-title" id="filteredTitle"></h2>
-                    <div id="filteredContent">
-                        <!-- Filtered content will be displayed here -->
+    <!-- Masseuse Selection Page (for Special Offers) -->
+    <section id="masseuseSelection" class="section">
+        <div class="home-container">
+            <nav class="main-nav">
+                <div class="nav-brand">Serenity Spa</div>
+                <div class="nav-links">
+                    <button class="nav-link" onclick="showSection('home')">← Back to Home</button>
+                    <button class="nav-link login-btn" onclick="showSection('login')">Login</button>
+                </div>
+            </nav>
+
+            <div class="home-content">
+                <section class="content-section">
+                    <h2 class="section-title" id="masseuseSelectionTitle">Select Your Therapist</h2>
+                    <p class="section-subtitle" id="masseuseSelectionSubtitle">Choose from available therapists for this service</p>
+                    <div class="therapists-grid" id="masseuseSelectionGrid">
+                        <!-- Filtered therapists will be displayed here -->
                     </div>
-                    <button class="btn-secondary" onclick="clearFilters()" style="margin-top: 20px;">Clear Filters</button>
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="btn-secondary" onclick="showSection('home')">Back to Home</button>
+                    </div>
                 </section>
             </div>
         </div>
