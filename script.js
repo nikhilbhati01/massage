@@ -378,7 +378,7 @@ function renderOffers() {
     grid.innerHTML = specialOffers.map(offer => {
         const service = services.find(s => s.id === offer.serviceId);
         return `
-            <div class="offer-card" onclick="filterByService('${offer.serviceId}')">
+            <div class="offer-card" onclick="navigateToMasseuseSelection('${offer.serviceId}')">
                 <div class="offer-icon">${offer.icon}</div>
                 <h3>${offer.title}</h3>
                 <p class="offer-discount">${offer.discount}% OFF</p>
@@ -413,63 +413,65 @@ function renderTherapists() {
 
 // ==================== FILTERING LOGIC ====================
 
-function filterByService(serviceId) {
+function navigateToMasseuseSelection(serviceId) {
     currentFilter = { type: 'service', value: serviceId };
     const service = services.find(s => s.id === serviceId);
     const filteredTherapists = therapists.filter(t => t.specialties.includes(serviceId));
     
-    const filteredSection = document.getElementById('filteredResults');
-    const filteredTitle = document.getElementById('filteredTitle');
-    const filteredContent = document.getElementById('filteredContent');
+    const titleEl = document.getElementById('masseuseSelectionTitle');
+    const subtitleEl = document.getElementById('masseuseSelectionSubtitle');
+    const gridEl = document.getElementById('masseuseSelectionGrid');
     
-    if (filteredSection && filteredTitle && filteredContent) {
-        filteredTitle.textContent = `Therapists Offering ${service ? service.name : serviceId}`;
-        filteredContent.innerHTML = `
-            <div class="filtered-therapists">
-                ${filteredTherapists.length > 0 ? filteredTherapists.map(therapist => `
-                    <div class="therapist-card">
-                        <div class="therapist-avatar">${therapist.avatar}</div>
-                        <h3>${therapist.name}</h3>
-                        <div class="therapist-rating">
-                            ${'⭐'.repeat(Math.floor(therapist.rating))} ${therapist.rating}
-                        </div>
-                        <p class="therapist-experience">${therapist.experience} experience</p>
-                        <p class="therapist-bio">${therapist.bio}</p>
-                    </div>
-                `).join('') : '<p>No therapists available for this service.</p>'}
+    if (titleEl && subtitleEl && gridEl) {
+        titleEl.textContent = `Therapists Offering ${service ? service.name : serviceId}`;
+        subtitleEl.textContent = `Select a therapist for ${service ? service.name : serviceId}`;
+        gridEl.innerHTML = filteredTherapists.length > 0 ? filteredTherapists.map(therapist => `
+            <div class="therapist-card" onclick="selectTherapistFromList('${therapist.id}')">
+                <div class="therapist-avatar">${therapist.avatar}</div>
+                <h3>${therapist.name}</h3>
+                <div class="therapist-rating">
+                    ${'⭐'.repeat(Math.floor(therapist.rating))} ${therapist.rating}
+                </div>
+                <p class="therapist-experience">${therapist.experience} experience</p>
+                <p class="therapist-bio">${therapist.bio}</p>
+                <div class="therapist-skills">
+                    ${therapist.specialties.map(sid => {
+                        const s = services.find(serv => serv.id === sid);
+                        return `<span class="skill-tag">${s ? s.name : sid}</span>`;
+                    }).join('')}
+                </div>
             </div>
-        `;
-        filteredSection.style.display = 'block';
-        filteredSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        `).join('') : '<p style="grid-column: 1/-1; text-align: center; padding: 40px;">No therapists available for this service.</p>';
+        
+        showSection('masseuseSelection');
     }
+}
+
+function filterByService(serviceId) {
+    navigateToMasseuseSelection(serviceId);
+}
+
+function selectTherapistFromList(therapistId) {
+    // Navigate to booking page with therapist pre-selected
+    bookingData.therapist = therapistId;
+    showSection('booking');
+    // Auto-advance to step 2 since therapist is selected
+    setTimeout(() => {
+        nextStep(2);
+    }, 100);
 }
 
 function filterByTherapist(therapistId) {
     currentFilter = { type: 'therapist', value: therapistId };
     const therapist = therapists.find(t => t.id === therapistId);
-    const filteredServices = services.filter(s => therapist.specialties.includes(s.id));
     
-    const filteredSection = document.getElementById('filteredResults');
-    const filteredTitle = document.getElementById('filteredTitle');
-    const filteredContent = document.getElementById('filteredContent');
-    
-    if (filteredSection && filteredTitle && filteredContent) {
-        filteredTitle.textContent = `Services Offered by ${therapist.name}`;
-        filteredContent.innerHTML = `
-            <div class="filtered-services">
-                ${filteredServices.length > 0 ? filteredServices.map(service => `
-                    <div class="service-card">
-                        <div class="service-icon">${service.icon}</div>
-                        <h3>${service.name}</h3>
-                        <p class="service-duration">${service.duration}</p>
-                        <p class="service-price">$${service.price}</p>
-                    </div>
-                `).join('') : '<p>No services available for this therapist.</p>'}
-            </div>
-        `;
-        filteredSection.style.display = 'block';
-        filteredSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    // Navigate to booking page with therapist pre-selected
+    bookingData.therapist = therapistId;
+    showSection('booking');
+    // Auto-advance to step 2 since therapist is selected
+    setTimeout(() => {
+        nextStep(2);
+    }, 100);
 }
 
 function clearFilters() {
@@ -804,8 +806,8 @@ function confirmBooking() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Show landing page by default
-    showSection('landing');
+    // Show home page by default
+    showSection('home');
     
     // Add smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';
