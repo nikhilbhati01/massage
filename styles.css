@@ -612,6 +612,21 @@ body {
     color: var(--color-dark-green);
 }
 
+.nav-link.login-btn {
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .nav-link.login-btn {
+        margin-left: 0;
+        order: -1;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+    }
+}
+
 .home-content {
     padding: 60px 40px;
 }
@@ -719,8 +734,25 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    animation: shimmer 3s infinite;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    animation: shimmer 3s linear infinite;
+}
+
+.offer-card::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: conic-gradient(transparent, rgba(255,255,255,0.15), transparent 30%);
+    animation: rotateBorder 4s linear infinite;
+}
+
+.offer-icon {
+    position: relative;
+    z-index: 2;
+    animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -728,31 +760,47 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-.offer-card:hover {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 12px 35px rgba(122, 155, 115, 0.4);
+@keyframes rotateBorder {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.offer-icon {
-    font-size: 3rem;
-    margin-bottom: 10px;
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
+
+.offer-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(122, 155, 115, 0.5);
+}
+
+.offer-card:hover::after {
+    animation-duration: 2s;
+}
+
 
 .offer-card h3 {
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 5px;
+    position: relative;
+    z-index: 2;
 }
 
 .offer-discount {
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 5px;
+    position: relative;
+    z-index: 2;
 }
 
 .offer-service {
     font-size: 0.85rem;
     opacity: 0.9;
+    position: relative;
+    z-index: 2;
 }
 
 /* Therapists Grid */
@@ -1215,14 +1263,31 @@ body {
     /* Home Page Mobile */
     .main-nav {
         padding: 15px 20px;
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .nav-brand {
+        font-size: 1.2rem;
     }
     
     .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+        gap: 8px;
+        align-items: center;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+    
+    .nav-link.login-btn {
+        order: 999;
+        margin-left: auto;
     }
     
     .home-content {
